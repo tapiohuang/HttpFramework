@@ -11,24 +11,14 @@ public class ResponseReaderHandle extends ResponseDataHandle implements Response
     private HttpRequestDefinition httpRequestDefinition;
 
     public ResponseReaderHandle(HttpRequestDefinition httpRequestDefinition) {
+        super(httpRequestDefinition);
         this.httpRequestDefinition = httpRequestDefinition;
     }
 
     @Override
     public void handle() {
-        try {
-            readData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super.handle();
+        System.out.println(httpRequestDefinition);
     }
 
-    private void readData() throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(httpRequestDefinition.getHttpURLConnection().getInputStream(), StandardCharsets.UTF_8));
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int c; (c = in.read()) >= 0; )
-            stringBuilder.append((char) c);
-        String response = stringBuilder.toString();
-        System.out.println(response);
-    }
 }
