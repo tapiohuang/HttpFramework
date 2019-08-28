@@ -37,9 +37,11 @@ public class RequestSenderHandle extends RequestDataHandle implements RequestHan
             url += "?" + httpRequestDefinition.getRequestData().getRequestBody().readToString();
         }
         URL HttpUrl = new URL(url);
-        //Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888));
-        //this.httpURLConnection = (HttpURLConnection) HttpUrl.openConnection(proxy);
-        this.httpURLConnection = (HttpURLConnection) HttpUrl.openConnection();
+        if (httpRequestDefinition.getHttpProxy() == null) {
+            this.httpURLConnection = (HttpURLConnection) HttpUrl.openConnection();
+        } else {
+            this.httpURLConnection = (HttpURLConnection) HttpUrl.openConnection(httpRequestDefinition.getHttpProxy().getProxy());
+        }
         httpURLConnection.setRequestMethod(httpRequestDefinition.getRequestMethod().getMethod());
         httpURLConnection.setReadTimeout(httpRequestDefinition.getTimeout());
         httpURLConnection.setConnectTimeout(httpRequestDefinition.getTimeout());

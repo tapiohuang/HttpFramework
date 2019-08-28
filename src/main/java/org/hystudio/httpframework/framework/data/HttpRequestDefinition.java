@@ -11,6 +11,7 @@ import org.hystudio.httpframework.framework.interfaces.ContentParser;
 import org.hystudio.httpframework.framework.interfaces.DataParser;
 
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 
 
 public class HttpRequestDefinition {
@@ -28,6 +29,7 @@ public class HttpRequestDefinition {
     private ResponseData responseData;
     private HttpURLConnection httpURLConnection;
     private Integer timeout;
+    private HttpProxy httpProxy;
 
     @Override
     public String toString() {
@@ -46,6 +48,7 @@ public class HttpRequestDefinition {
                 ", responseData=" + responseData +
                 ", httpURLConnection=" + httpURLConnection +
                 ", timeout=" + timeout +
+                ", httpProxy=" + httpProxy +
                 '}';
     }
 
@@ -163,4 +166,11 @@ public class HttpRequestDefinition {
     }
 
 
+    public HttpProxy getHttpProxy() {
+        return httpProxy;
+    }
+
+    public void setHttpProxy(HttpProxy httpProxy) {
+        this.httpProxy = httpProxy;
+    }
 }

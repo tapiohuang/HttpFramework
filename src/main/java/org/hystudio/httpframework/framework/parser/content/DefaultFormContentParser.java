@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class DefaultFormContentParser implements ContentParser {
+public class DefaultFormContentParser extends AbstractContentParser implements ContentParser {
     private RequestEntities requestEntities;
     private LinkedHashMap<String, String> dataMap = new LinkedHashMap<>();
     private RequestBody requestBody;
@@ -41,29 +41,6 @@ public class DefaultFormContentParser implements ContentParser {
         requestDataStringBuilder.deleteCharAt(requestDataStringBuilder.length() - 1);
         requestBody.set(requestDataStringBuilder.toString());
     }
-
-    private void readRequestEntity(Object o) {
-        Field[] fields = o.getClass().getDeclaredFields();
-        Method[] methods = o.getClass().getMethods();
-        HashMap<String, Integer> methodNameMap = new HashMap<>();
-        for (int i = 0; i < methods.length; i++) {
-            methodNameMap.put(methods[i].getName(), i);
-        }
-        for (Field f : fields
-        ) {
-            String fieldName = f.getName();
-            Integer index = methodNameMap.get("get" + StringUtil.upperFirstWord(fieldName));
-
-            if (index != null) {
-                Method method = methods[index];
-                try {
-                    String value = StringUtil.toString(method.invoke(o));
-                    dataMap.put(fieldName, value);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+    
 
 }

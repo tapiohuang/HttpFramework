@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
-public class DefaultJsonContentParser implements ContentParser {
+public class DefaultJsonContentParser extends AbstractContentParser implements ContentParser {
     private RequestEntities requestEntities;
     private LinkedHashMap<String, String> dataMap = new LinkedHashMap<>();
     private RequestBody requestBody;
@@ -35,27 +35,4 @@ public class DefaultJsonContentParser implements ContentParser {
         this.requestBody = requestBody;
     }
 
-    private void readRequestEntity(Object o) {
-        Field[] fields = o.getClass().getDeclaredFields();
-        Method[] methods = o.getClass().getMethods();
-        HashMap<String, Integer> methodNameMap = new HashMap<>();
-        for (int i = 0; i < methods.length; i++) {
-            methodNameMap.put(methods[i].getName(), i);
-        }
-        for (Field f : fields
-        ) {
-            String fieldName = f.getName();
-            Integer index = methodNameMap.get("get" + StringUtil.upperFirstWord(fieldName));
-
-            if (index != null) {
-                Method method = methods[index];
-                try {
-                    String value = StringUtil.toString(method.invoke(o));
-                    dataMap.put(fieldName, value);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 }

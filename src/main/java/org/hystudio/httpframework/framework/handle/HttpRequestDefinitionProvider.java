@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle;
 
 
 import org.hystudio.httpframework.framework.annotation.*;
+import org.hystudio.httpframework.framework.data.HttpProxy;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.request.RequestData;
 import org.hystudio.httpframework.framework.data.request.RequestEntities;
@@ -13,6 +14,7 @@ import org.hystudio.httpframework.framework.interfaces.DataParser;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.Proxy;
 
 public class HttpRequestDefinitionProvider {
 
@@ -56,6 +58,7 @@ public class HttpRequestDefinitionProvider {
         RequestHeaders requestHeaders = new RequestHeaders();
         ContentParser contentParser = null;
         DataParser dataParser = null;
+        HttpProxy httpProxy = null;
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
         for (int i = 0; i < parameterAnnotations.length; i++) {
             for (int j = 0; j < parameterAnnotations[i].length; j++) {
@@ -75,12 +78,18 @@ public class HttpRequestDefinitionProvider {
                         dataParser = (DataParser) args[i];
                     }
                 }
+                if (parameterAnnotations[i][j] instanceof RequestProxy) {
+                    if (args[i].getClass().equals(HttpProxy.class)) {
+                        httpProxy = (HttpProxy) args[i];
+                    }
+                }
             }
         }
         httpRequestDefinition.setRequestEntities(requestEntities);
         httpRequestDefinition.setRequestHeaders(requestHeaders);
         httpRequestDefinition.setContentParser(contentParser);
         httpRequestDefinition.setDataParser(dataParser);
+        httpRequestDefinition.setHttpProxy(httpProxy);
     }
 
     private void setResponseType() {
