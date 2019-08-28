@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public class ResponseReaderHandle implements ResponseHandle {
+public class ResponseReaderHandle extends ResponseDataHandle implements ResponseHandle {
     private HttpRequestDefinition httpRequestDefinition;
 
     public ResponseReaderHandle(HttpRequestDefinition httpRequestDefinition) {
