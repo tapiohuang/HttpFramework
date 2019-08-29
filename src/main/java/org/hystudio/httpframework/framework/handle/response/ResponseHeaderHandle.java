@@ -23,11 +23,11 @@ public abstract class ResponseHeaderHandle implements ResponseHandle {
 
     @Override
     public void handle() {
-        this.httpURLConnection = httpRequestDefinition.getHttpURLConnection();
         this.readResponseHeader();
     }
 
     private void readResponseHeader() {
+        this.httpURLConnection = this.httpRequestDefinition.getHttpURLConnection();
         Map<String, List<String>> headerMap = this.httpURLConnection.getHeaderFields();
         headerMap.forEach((k, v) -> {
             if (k != null) {
