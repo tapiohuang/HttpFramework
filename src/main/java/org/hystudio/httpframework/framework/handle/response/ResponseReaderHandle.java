@@ -18,7 +18,6 @@ public class ResponseReaderHandle extends ResponseDataHandle implements Response
     @Override
     public void handle() {
         super.handle();
-        System.out.println(httpRequestDefinition);
     }
 
 }

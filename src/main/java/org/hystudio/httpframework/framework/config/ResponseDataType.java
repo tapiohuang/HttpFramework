@@ -1,7 +1,7 @@
 package org.hystudio.httpframework.framework.config;
 
 public enum ResponseDataType {
-    XML("XML"), HTML("HTML"), SCRIPT("SCRIPT"), JSON("JSON"),
+    XML("text/xml"), HTML("text/html"), SCRIPT("SCRIPT"), JSON("application/json"), FORM("application/x-www-form-urlencoded"),
     TEXT("TEXT");
 
     private final String dataType;
