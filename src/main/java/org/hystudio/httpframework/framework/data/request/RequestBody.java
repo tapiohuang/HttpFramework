@@ -21,6 +21,25 @@ public class RequestBody {
         return requestBodyByteArray;
     }
 
+    public void add(byte[] bytes) {
+        synchronized (this) {
+            byte[] newArray = new byte[requestBodyByteArray.length + bytes.length];
+            int index = 0;
+            for (byte b : requestBodyByteArray
+            ) {
+                newArray[index] = b;
+                index++;
+            }
+            for (byte b : bytes
+            ) {
+                newArray[index] = b;
+                index++;
+            }
+            requestBodyByteArray = newArray;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "HttpRequestBody{" +

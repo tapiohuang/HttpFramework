@@ -4,11 +4,7 @@ package org.hystudio.httpframework.framework.parser.content;
 import org.hystudio.httpframework.framework.data.request.RequestBody;
 import org.hystudio.httpframework.framework.data.request.RequestEntities;
 import org.hystudio.httpframework.framework.interfaces.ContentParser;
-import org.hystudio.httpframework.utils.StringUtil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 public class DefaultFormContentParser extends AbstractContentParser implements ContentParser {
