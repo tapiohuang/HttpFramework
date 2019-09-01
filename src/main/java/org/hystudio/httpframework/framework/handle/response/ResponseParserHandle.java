@@ -2,15 +2,10 @@ package org.hystudio.httpframework.framework.handle.response;
 
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-
-public class ResponseReaderHandle extends ResponseParserHandle implements ResponseHandle {
+public abstract class ResponseParserHandle extends ResponseDataHandle {
     private HttpRequestDefinition httpRequestDefinition;
 
-    public ResponseReaderHandle(HttpRequestDefinition httpRequestDefinition) {
+    public ResponseParserHandle(HttpRequestDefinition httpRequestDefinition) {
         super(httpRequestDefinition);
         this.httpRequestDefinition = httpRequestDefinition;
     }
@@ -19,5 +14,4 @@ public class ResponseReaderHandle extends ResponseParserHandle implements Respon
     public void handle() {
         super.handle();
     }
-
 }
