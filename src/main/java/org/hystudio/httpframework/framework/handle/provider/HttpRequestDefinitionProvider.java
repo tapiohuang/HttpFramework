@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework.handle;
+package org.hystudio.httpframework.framework.handle.provider;
 
 
 import org.hystudio.httpframework.framework.annotation.*;
@@ -14,9 +14,8 @@ import org.hystudio.httpframework.framework.interfaces.DataParser;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.net.Proxy;
 
-public class HttpRequestDefinitionProvider {
+public class HttpRequestDefinitionProvider extends AbstractParserProvider {
 
     private Method method;
     private Object[] args;
@@ -39,6 +38,8 @@ public class HttpRequestDefinitionProvider {
         this.setRequestData();//10.设置请求的数据
         this.setResponseData();//11.设置返回的数据
         this.setTimeout();//12.设置超时时间
+        this.setContentParser();//12.设置超时时间
+        this.setDataParser();//12.设置超时时间
         return this.httpRequestDefinition;
     }
 
@@ -69,12 +70,12 @@ public class HttpRequestDefinitionProvider {
                     requestHeaders.addHeader(args[i]);
                 }
                 if (parameterAnnotations[i][j] instanceof RequestParser) {
-                    if (args[i].getClass().isInstance(ContentParser.class)) {
+                    if (args[i] instanceof ContentParser) {
                         contentParser = (ContentParser) args[i];
                     }
                 }
                 if (parameterAnnotations[i][j] instanceof ResponseParser) {
-                    if (args[i].getClass().isInstance(DataParser.class)) {
+                    if (args[i] instanceof DataParser) {
                         dataParser = (DataParser) args[i];
                     }
                 }
@@ -123,5 +124,24 @@ public class HttpRequestDefinitionProvider {
 
     private void setTimeout() {
         httpRequestDefinition.setTimeout(this.requestAnnotation.timeout());
+    }
+
+    @Override
+    public void setContentParser() {
+        ContentParser contentParser = httpRequestDefinition.getContentParser();
+        if (contentParser == null) {
+            contentParser = this.createDefaultContentParser(httpRequestDefinition.getRequestContentType());
+            httpRequestDefinition.setContentParser(contentParser);
+        }
+    }
+
+    @Override
+    public void setDataParser() {
+        DataParser dataParser = httpRequestDefinition.getDataParser();
+        System.out.println(dataParser);
+        if (dataParser == null) {
+            dataParser = this.createDefaultDataParser(httpRequestDefinition.getResponseDataType());
+            httpRequestDefinition.setDataParser(dataParser);
+        }
     }
 }

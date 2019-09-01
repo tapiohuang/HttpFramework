@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle;
 
 
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
+import org.hystudio.httpframework.framework.handle.provider.HttpRequestDefinitionProvider;
 import org.hystudio.httpframework.framework.handle.request.RequestSenderHandle;
 import org.hystudio.httpframework.framework.handle.response.ResponseReaderHandle;
 

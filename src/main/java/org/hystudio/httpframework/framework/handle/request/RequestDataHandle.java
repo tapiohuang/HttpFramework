@@ -27,12 +27,6 @@ public abstract class RequestDataHandle extends RequestHeaderHandle implements R
 
     public void requestDataHandle() {
         ContentParser contentParser = httpRequestDefinition.getContentParser();
-        if (contentParser == null) {
-            contentParser = DefaultContentParserFactory.createParser(httpRequestDefinition.getRequestContentType());
-            if (httpRequestDefinition.getRequestMethod().equals(RequestMethod.GET)) {
-                contentParser = DefaultContentParserFactory.createParser(RequestContentType.FORM);
-            }
-        }
         contentParser.setRequestEntities(this.httpRequestDefinition.getRequestEntities());
         contentParser.setRequestBody(this.httpRequestDefinition.getRequestData().getRequestBody());
         contentParser.parser();
