@@ -30,6 +30,7 @@ public class HttpRequestDefinition {
     private HttpURLConnection httpURLConnection;
     private Integer timeout;
     private HttpProxy httpProxy;
+    private Object responseObject;
 
     @Override
     public String toString() {
@@ -49,7 +50,16 @@ public class HttpRequestDefinition {
                 ", httpURLConnection=" + httpURLConnection +
                 ", timeout=" + timeout +
                 ", httpProxy=" + httpProxy +
+                ", responseObject=" + responseObject +
                 '}';
+    }
+
+    public Object getResponseObject() {
+        return responseObject;
+    }
+
+    public void setResponseObject(Object responseObject) {
+        this.responseObject = responseObject;
     }
 
     public Integer getTimeout() {

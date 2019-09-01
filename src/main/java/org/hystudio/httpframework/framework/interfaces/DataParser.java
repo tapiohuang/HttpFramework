@@ -6,4 +6,6 @@ public interface DataParser {
     public Object parser();
 
     public void setResponseData(ResponseData responseData);
+
+    public void setResponseType(Class responseType);
 }

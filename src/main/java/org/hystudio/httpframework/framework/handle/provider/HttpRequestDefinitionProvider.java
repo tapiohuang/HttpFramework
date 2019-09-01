@@ -138,7 +138,6 @@ public class HttpRequestDefinitionProvider extends AbstractParserProvider {
     @Override
     public void setDataParser() {
         DataParser dataParser = httpRequestDefinition.getDataParser();
-        System.out.println(dataParser);
         if (dataParser == null) {
             dataParser = this.createDefaultDataParser(httpRequestDefinition.getResponseDataType());
             httpRequestDefinition.setDataParser(dataParser);

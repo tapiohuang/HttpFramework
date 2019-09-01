@@ -30,7 +30,7 @@ public class RequestHandle {
         responseReaderHandle = new ResponseReaderHandle(httpRequestDefinition);
         requestSenderHandle.handle();
         responseReaderHandle.handle();
-        return null;
+        return httpRequestDefinition.getResponseObject();
     }
 
 }
