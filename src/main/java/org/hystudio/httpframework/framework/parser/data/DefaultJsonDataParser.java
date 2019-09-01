@@ -4,4 +4,5 @@ import org.hystudio.httpframework.framework.interfaces.ContentParser;
 import org.hystudio.httpframework.framework.interfaces.DataParser;
 
 public class DefaultJsonDataParser implements DataParser {
+
 }
