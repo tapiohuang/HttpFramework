@@ -10,7 +10,6 @@ import java.util.LinkedHashSet;
 
 public class DefaultJsonContentParser extends AbstractContentParser implements ContentParser {
     private RequestEntities requestEntities;
-    private LinkedHashMap<String, String> dataMap = new LinkedHashMap<>();
     private RequestBody requestBody;
 
     @Override
