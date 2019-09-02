@@ -27,7 +27,7 @@ public class HttpRequestDefinition {
     private Thread currentThread;
     private RequestData requestData;
     private ResponseData responseData;
-    private HttpURLConnection httpURLConnection;
+    private HttpConnection httpConnection;
     private Integer timeout;
     private HttpProxy httpProxy;
     private Object responseObject;
@@ -47,11 +47,19 @@ public class HttpRequestDefinition {
                 ", currentThread=" + currentThread +
                 ", requestData=" + requestData +
                 ", responseData=" + responseData +
-                ", httpURLConnection=" + httpURLConnection +
+                ", httpConnection=" + httpConnection +
                 ", timeout=" + timeout +
                 ", httpProxy=" + httpProxy +
                 ", responseObject=" + responseObject +
                 '}';
+    }
+
+    public HttpConnection getHttpConnection() {
+        return httpConnection;
+    }
+
+    public void setHttpConnection(HttpConnection httpConnection) {
+        this.httpConnection = httpConnection;
     }
 
     public Object getResponseObject() {
@@ -70,14 +78,6 @@ public class HttpRequestDefinition {
         this.timeout = timeout;
     }
 
-    public HttpURLConnection getHttpURLConnection() {
-        return httpURLConnection;
-    }
-
-    public void setHttpURLConnection(HttpURLConnection httpURLConnection) {
-        this.httpURLConnection = httpURLConnection;
-    }
-    //private RequestClient requestClient;
 
     public ResponseDataType getResponseDataType() {
         return responseDataType;
