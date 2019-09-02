@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class ResponseHeaderHandle implements ResponseHandle {
-    protected HttpURLConnection httpURLConnection;
     private HttpHeader httpHeader;
     private HttpRequestDefinition httpRequestDefinition;
 
@@ -27,8 +26,8 @@ public abstract class ResponseHeaderHandle implements ResponseHandle {
     }
 
     private void readResponseHeader() {
-        this.httpURLConnection = this.httpRequestDefinition.getHttpURLConnection();
-        Map<String, List<String>> headerMap = this.httpURLConnection.getHeaderFields();
+        HttpURLConnection httpURLConnection = this.httpRequestDefinition.getHttpConnection().getHttpURLConnection();
+        Map<String, List<String>> headerMap = httpURLConnection.getHeaderFields();
         headerMap.forEach((k, v) -> {
             if (k != null) {
                 v.forEach(v1 -> {
