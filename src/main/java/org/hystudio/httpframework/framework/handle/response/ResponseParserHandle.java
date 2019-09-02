@@ -25,7 +25,6 @@ public abstract class ResponseParserHandle extends ResponseDataHandle {
         }
         dataParser.setResponseData(httpRequestDefinition.getResponseData());
         dataParser.setResponseType(httpRequestDefinition.getResponseType());
-        System.out.println("解析器为:" + dataParser);
         Object result = dataParser.parser();
         httpRequestDefinition.setResponseObject(result);
     }
