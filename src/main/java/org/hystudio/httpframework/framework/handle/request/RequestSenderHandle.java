@@ -25,7 +25,7 @@ public class RequestSenderHandle extends RequestDataHandle implements RequestHan
             prepareConnection();
             parserHeader();
             sendData();
-            httpRequestDefinition.setHttpURLConnection(this.httpURLConnection);
+            httpRequestDefinition.getHttpConnection().setHttpURLConnection(this.httpURLConnection);
         } catch (IOException e) {
             e.printStackTrace();
         }

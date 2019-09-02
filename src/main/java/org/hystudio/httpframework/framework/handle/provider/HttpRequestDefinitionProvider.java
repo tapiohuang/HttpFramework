@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle.provider;
 
 
 import org.hystudio.httpframework.framework.annotation.*;
+import org.hystudio.httpframework.framework.data.HttpConnection;
 import org.hystudio.httpframework.framework.data.HttpProxy;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.request.RequestData;
@@ -40,7 +41,12 @@ public class HttpRequestDefinitionProvider extends AbstractParserProvider {
         this.setTimeout();//12.设置超时时间
         this.setContentParser();//12.设置超时时间
         this.setDataParser();//12.设置超时时间
+        this.setHttpConnection();//12.设置超时时间
         return this.httpRequestDefinition;
+    }
+
+    private void setHttpConnection() {
+        httpRequestDefinition.setHttpConnection(new HttpConnection());
     }
 
     private void readRequestAnnotation() {
