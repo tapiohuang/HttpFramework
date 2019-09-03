@@ -1,7 +1,6 @@
 package org.hystudio.httpframework.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class GsonUtil {
     private static Gson mGson = new Gson();
