@@ -2,12 +2,13 @@ package org.hystudio.httpframework.framework.handle.response;
 
 import org.hystudio.httpframework.framework.data.HttpHeader;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
+import org.hystudio.httpframework.framework.interfaces.HttpHandle;
 
 import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ResponseHeaderHandle implements ResponseHandle {
+public abstract class ResponseHeaderHandle implements HttpHandle {
     private HttpHeader httpHeader;
     private HttpRequestDefinition httpRequestDefinition;
 
