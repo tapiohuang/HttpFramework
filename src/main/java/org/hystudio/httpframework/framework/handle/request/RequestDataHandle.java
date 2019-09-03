@@ -1,14 +1,12 @@
 package org.hystudio.httpframework.framework.handle.request;
 
-import org.hystudio.httpframework.framework.config.RequestContentType;
-import org.hystudio.httpframework.framework.config.RequestMethod;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.request.RequestData;
-import org.hystudio.httpframework.framework.factory.DefaultContentParserFactory;
 import org.hystudio.httpframework.framework.interfaces.ContentParser;
+import org.hystudio.httpframework.framework.interfaces.HttpHandle;
 
 
-public abstract class RequestDataHandle extends RequestHeaderHandle implements RequestHandle {
+public abstract class RequestDataHandle extends RequestHeaderHandle implements HttpHandle {
     private RequestData requestData;
 
     private HttpRequestDefinition httpRequestDefinition;

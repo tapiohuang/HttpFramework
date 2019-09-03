@@ -7,9 +7,8 @@ import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.*;
-import java.util.Arrays;
 
-public class RequestSenderHandle extends RequestDataHandle implements RequestHandle {
+public class RequestSenderHandle extends RequestDataHandle {
     private HttpRequestDefinition httpRequestDefinition;
     private HttpURLConnection httpURLConnection;
 

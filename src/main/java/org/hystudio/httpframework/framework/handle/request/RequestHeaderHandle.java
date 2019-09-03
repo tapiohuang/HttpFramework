@@ -4,6 +4,7 @@ package org.hystudio.httpframework.framework.handle.request;
 import org.hystudio.httpframework.framework.data.HttpHeader;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.request.RequestHeaders;
+import org.hystudio.httpframework.framework.interfaces.HttpHandle;
 import org.hystudio.httpframework.utils.StringUtil;
 
 import java.lang.reflect.Field;
@@ -14,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class RequestHeaderHandle implements RequestHandle {
+public abstract class RequestHeaderHandle implements HttpHandle {
     private RequestHeaders requestHeaders;
 
     private HttpHeader httpHeader;
