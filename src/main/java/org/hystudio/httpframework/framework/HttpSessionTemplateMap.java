@@ -1,6 +1,4 @@
-package org.hystudio.httpframework.framework.proxy;
-
-import org.hystudio.httpframework.framework.HttpSessionTemplate;
+package org.hystudio.httpframework.framework;
 
 import java.util.HashMap;
 
