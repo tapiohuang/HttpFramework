@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle.response;
 
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.response.ResponseBody;
+import org.hystudio.httpframework.framework.exception.HttpSessionExecuteException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 
-public abstract class ResponseDataHandle extends ResponseHeaderHandle   {
+public abstract class ResponseDataHandle extends ResponseHeaderHandle {
     private HttpRequestDefinition httpRequestDefinition;
     private ResponseBody responseBody;
 
@@ -20,12 +21,12 @@ public abstract class ResponseDataHandle extends ResponseHeaderHandle   {
     }
 
     @Override
-    public void handle() {
+    public void handle() throws HttpSessionExecuteException {
         super.handle();
         try {
             readData();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new HttpSessionExecuteException(e);
         }
     }
 

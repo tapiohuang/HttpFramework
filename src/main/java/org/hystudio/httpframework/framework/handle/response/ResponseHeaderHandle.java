@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle.response;
 
 import org.hystudio.httpframework.framework.data.HttpHeader;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
+import org.hystudio.httpframework.framework.exception.HttpSessionExecuteException;
 import org.hystudio.httpframework.framework.interfaces.HttpHandle;
 
 import java.net.HttpURLConnection;
@@ -22,7 +23,7 @@ public abstract class ResponseHeaderHandle implements HttpHandle {
     }
 
     @Override
-    public void handle() {
+    public void handle() throws HttpSessionExecuteException {
         this.readResponseHeader();
     }
 

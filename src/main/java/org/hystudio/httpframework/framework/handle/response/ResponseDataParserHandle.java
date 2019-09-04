@@ -2,6 +2,7 @@ package org.hystudio.httpframework.framework.handle.response;
 
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.exception.HttpRequestException;
+import org.hystudio.httpframework.framework.exception.HttpSessionExecuteException;
 import org.hystudio.httpframework.framework.interfaces.DataParser;
 
 public abstract class ResponseDataParserHandle extends ResponseDataHandle {
@@ -13,7 +14,7 @@ public abstract class ResponseDataParserHandle extends ResponseDataHandle {
     }
 
     @Override
-    public void handle() {
+    public void handle() throws HttpSessionExecuteException {
         super.handle();
         parserData();
     }
