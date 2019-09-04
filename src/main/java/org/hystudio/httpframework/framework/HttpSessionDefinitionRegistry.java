@@ -14,7 +14,7 @@ public class HttpSessionDefinitionRegistry {
         httpSessionDefinitionHashMap.put(httpSessionDefinition.getMethod(), httpSessionDefinition);
     }
 
-    public void getDefinition(Method method) {
-        httpSessionDefinitionHashMap.get(method);
+    public HttpSessionDefinition getDefinition(Method method) {
+        return httpSessionDefinitionHashMap.get(method);
     }
 }

@@ -1,8 +1,7 @@
-package org.hystudio.httpframework.framework.proxy;
+package org.hystudio.httpframework.framework;
 
 import org.hystudio.httpframework.framework.annotation.HttpRequest;
-import org.hystudio.httpframework.framework.handle.RequestHandle;
-import org.hystudio.httpframework.framework.proxy.HttpRequestProxyFactory;
+import org.hystudio.httpframework.framework.proxy.HttpRequestFactory;
 import org.hystudio.httpframework.utils.StackTraceUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -14,7 +13,8 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.cglib.proxy.InvocationHandler;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -23,10 +23,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 
-import java.lang.reflect.Method;
 import java.util.Set;
 
-public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPostProcessor, EnvironmentAware, ResourceLoaderAware, BeanClassLoaderAware, BeanFactoryAware {
+public class HttpRequestDefinitionRegistry implements
+        BeanDefinitionRegistryPostProcessor, EnvironmentAware, ResourceLoaderAware, BeanClassLoaderAware, BeanFactoryAware, ApplicationContextAware {
     private String mainClassPath;
     private ClassPathScanningCandidateComponentProvider scanner;
     private Environment environment;
@@ -34,13 +34,31 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
     private ClassLoader classLoader;
     private Set<BeanDefinition> beanDefinitionSet;
     private BeanFactory beanFactory;
-
+    private HttpRequestFactory httpRequestFactory;
+    private ApplicationContext applicationContext;
+    private HttpSessionDefinitionRegistry httpSessionDefinitionRegistry;
 
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
+        this.initHttpSessionDefinitionRegistry();
+        this.initHttpRequestFactory();
         this.getBasePackage();//获取main的包名路径
         this.createPackageScanner();//创建包扫描器
-        this.startScan();
-        this.resolveHttpRequest();
+        this.startScan();//开始扫描含有HttpQuest的注解
+        this.resolveHttpRequest();//构建对象
+    }
+
+    /**
+     * 初始化每个HttpSession的定义注册器
+     */
+    private void initHttpSessionDefinitionRegistry() {
+        this.httpSessionDefinitionRegistry = new HttpSessionDefinitionRegistry();
+    }
+
+    /**
+     * 初始化HttpRequest工厂
+     */
+    private void initHttpRequestFactory() {
+        this.httpRequestFactory = new HttpRequestFactory(this.httpSessionDefinitionRegistry, this.applicationContext);
     }
 
     private void startScan() {
@@ -66,23 +84,8 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
      * @return Object //返回的代理Bean
      */
     private Object createBean(AnnotatedBeanDefinition annotatedBeanDefinition) {
-        Object o = HttpRequestProxyFactory.createProxy(annotatedBeanDefinition);
-        return o;
+        return httpRequestFactory.createProxy(annotatedBeanDefinition);
     }
-
-    /*
-    JDK的动态代理
-     */
-/*    private InvocationHandler createInvocationHandler() {
-        return new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                RequestHandle requestHandle = new RequestHandle(method, args);
-                return requestHandle.handle();
-            }
-        };
-    }*/
-
 
     private void getBasePackage() {
         try {
@@ -126,5 +129,10 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
 
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

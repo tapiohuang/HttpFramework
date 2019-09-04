@@ -1,4 +1,4 @@
 package org.hystudio.httpframework.framework;
 
-public interface Executor {
+public interface Executor extends Runnable {
 }
