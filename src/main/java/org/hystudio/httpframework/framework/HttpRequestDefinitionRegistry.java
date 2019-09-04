@@ -1,4 +1,4 @@
-package org.hystudio.httpframework;
+package org.hystudio.httpframework.framework.proxy;
 
 import org.hystudio.httpframework.framework.annotation.HttpRequest;
 import org.hystudio.httpframework.framework.handle.RequestHandle;
@@ -35,13 +35,13 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
     private Set<BeanDefinition> beanDefinitionSet;
     private BeanFactory beanFactory;
 
+
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
         this.getBasePackage();//获取main的包名路径
         this.createPackageScanner();//创建包扫描器
         this.startScan();
         this.resolveHttpRequest();
     }
-
 
     private void startScan() {
         AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(HttpRequest.class);
@@ -51,7 +51,6 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
     }
 
     private void resolveHttpRequest() {
-        //System.out.println(beanDefinitionSet);
         for (BeanDefinition beanDefinition : beanDefinitionSet
         ) {
             if (beanDefinition instanceof AnnotatedBeanDefinition) {
@@ -74,7 +73,7 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
     /*
     JDK的动态代理
      */
-    private InvocationHandler createInvocationHandler() {
+/*    private InvocationHandler createInvocationHandler() {
         return new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -82,7 +81,7 @@ public class HttpRequestDefinitionRegistry implements BeanDefinitionRegistryPost
                 return requestHandle.handle();
             }
         };
-    }
+    }*/
 
 
     private void getBasePackage() {
