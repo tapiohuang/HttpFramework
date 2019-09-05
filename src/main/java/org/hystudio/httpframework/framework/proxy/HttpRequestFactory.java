@@ -20,17 +20,11 @@ public class HttpRequestFactory {
     private final Callback[] callbacks;
     private final HttpRequestProxyFilter httpRequestProxyFilter;
     private HttpSessionDefinitionRegistry httpSessionDefinitionRegistry;
-    private ApplicationContext applicationContext;
-    private HttpSessionThreadPool httpSessionThreadPool;
-    private HttpSessionFactory httpSessionFactory;
 
-    public HttpRequestFactory(HttpSessionDefinitionRegistry httpSessionDefinitionRegistry, ApplicationContext applicationContext) {
-        this.httpSessionDefinitionRegistry = httpSessionDefinitionRegistry;
-        this.applicationContext = applicationContext;
-        this.httpSessionThreadPool = new HttpSessionThreadPool();
-        this.httpSessionFactory = new HttpSessionFactory(httpSessionDefinitionRegistry);
+    public HttpRequestFactory(ApplicationContext applicationContext) {
+        this.httpSessionDefinitionRegistry = applicationContext.getBean(HttpSessionDefinitionRegistry.class);
         callbacks = new Callback[2];
-        callbacks[1] = new HttpSessionHandle(httpSessionThreadPool, httpSessionFactory);
+        callbacks[1] = applicationContext.getBean(HttpSessionHandle.class);
         callbacks[0] = new DefaultHttpRequestInterceptor();
         httpRequestProxyFilter = new HttpRequestProxyFilter();
     }
