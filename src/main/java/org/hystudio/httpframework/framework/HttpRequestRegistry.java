@@ -26,7 +26,7 @@ import org.springframework.util.ClassUtils;
 
 import java.util.Set;
 
-public class HttpRequestDefinitionRegistry implements
+public class HttpRequestRegistry implements
         BeanDefinitionRegistryPostProcessor, EnvironmentAware, ResourceLoaderAware, BeanClassLoaderAware, BeanFactoryAware, ApplicationContextAware {
     private String mainClassPath;
     private ClassPathScanningCandidateComponentProvider scanner;
