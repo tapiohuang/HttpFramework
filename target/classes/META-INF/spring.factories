@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.hystudio.httpframework.framework.HttpRequestDefinitionRegistry
+org.hystudio.httpframework.framework.HttpRequestRegistry
