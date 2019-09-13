@@ -34,8 +34,16 @@ public abstract class ResponseDataHandle extends ResponseHeaderHandle {
         HttpURLConnection httpURLConnection = httpRequestDefinition.getHttpConnection().getHttpURLConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
         StringBuilder stringBuilder = new StringBuilder();
-        for (int c; (c = in.read()) >= 0; )
-            stringBuilder.append((char) c);
+        char[] tmp = new char[1024];
+        while (in.read(tmp) != -1) {
+            for (char c : tmp
+            ) {
+                if ((int) c == 0) {
+                    break;
+                }
+                stringBuilder.append(c);
+            }
+        }
         String response = stringBuilder.toString();
         responseBody.set(response);
     }

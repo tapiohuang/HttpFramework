@@ -23,7 +23,11 @@ public class RequestSenderHandle extends RequestDataHandle {
         try {
             prepareConnection();
             parserHeader();
-            sendData();
+            if (httpRequestDefinition.getRequestMethod() == RequestMethod.GET) {
+                getData();
+            } else {
+                sendData();
+            }
             httpRequestDefinition.getHttpConnection().setHttpURLConnection(this.httpURLConnection);
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,6 +56,7 @@ public class RequestSenderHandle extends RequestDataHandle {
         });
     }
 
+
     private void sendData() throws IOException {
         this.httpURLConnection.setDoInput(true);
         this.httpURLConnection.setDoOutput(true);
@@ -61,5 +66,9 @@ public class RequestSenderHandle extends RequestDataHandle {
         outputStream.write(httpRequestDefinition.getRequestData().getRequestBody().readToBytes());
         outputStream.flush();
         outputStream.close();
+    }
+
+    private void getData() throws IOException {
+        this.httpURLConnection.connect();
     }
 }
