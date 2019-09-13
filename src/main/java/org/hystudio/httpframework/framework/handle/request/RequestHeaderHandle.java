@@ -1,6 +1,8 @@
 package org.hystudio.httpframework.framework.handle.request;
 
 
+import org.hystudio.httpframework.framework.config.RequestContentType;
+import org.hystudio.httpframework.framework.config.RequestMethod;
 import org.hystudio.httpframework.framework.data.HttpHeader;
 import org.hystudio.httpframework.framework.data.HttpRequestDefinition;
 import org.hystudio.httpframework.framework.data.request.RequestHeaders;
@@ -17,11 +19,12 @@ import java.util.TreeMap;
 
 public abstract class RequestHeaderHandle implements HttpHandle {
     private RequestHeaders requestHeaders;
-
+    private RequestContentType requestContentType;
     private HttpHeader httpHeader;
 
     protected RequestHeaderHandle(HttpRequestDefinition httpRequestDefinition) {
         this.requestHeaders = httpRequestDefinition.getRequestHeaders();
+        this.requestContentType = httpRequestDefinition.getRequestContentType();
         this.httpHeader = new HttpHeader();
         httpRequestDefinition.getRequestData().setHttpHeader(httpHeader);
     }
@@ -36,6 +39,9 @@ public abstract class RequestHeaderHandle implements HttpHandle {
                 httpHeader.addAll(prepareHeader(v));
             }
         });
+        if (httpHeader.get("Content-Type") == null) {
+            httpHeader.add("Content-Type", requestContentType.getContentType());
+        }
     }
 
     private Map<String, String> prepareHeader(Object o) {

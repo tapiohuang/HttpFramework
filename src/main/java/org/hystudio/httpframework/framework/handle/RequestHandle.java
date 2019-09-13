@@ -29,7 +29,6 @@ public class RequestHandle {
         this.args = args;
         this.httpRequestDefinitionProvider = new HttpRequestDefinitionProvider();
         httpRequestDefinition = httpRequestDefinitionProvider.provide(method, args);
-
         requestSenderHandle = new RequestSenderHandle(httpRequestDefinition);
         responseReaderHandle = new ResponseReaderHandle(httpRequestDefinition);
         requestSenderHandle.handle();

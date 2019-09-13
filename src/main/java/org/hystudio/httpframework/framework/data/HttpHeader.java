@@ -31,8 +31,8 @@ public class HttpHeader {
         headerMap.put(key, value);
     }
 
-    public void get(String key) {
-        headerMap.get(key);
+    public String get(String key) {
+        return headerMap.get(key);
     }
 
 }
