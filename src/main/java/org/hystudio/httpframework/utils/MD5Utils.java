@@ -1,4 +1,4 @@
-package com.hycode.bdlprunner.utils;
+package org.hystudio.httpframework.utils;
 
 import java.security.MessageDigest;
 

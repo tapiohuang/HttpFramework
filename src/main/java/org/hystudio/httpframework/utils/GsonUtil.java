@@ -3,12 +3,11 @@ package org.hystudio.httpframework.utils;
 import com.google.gson.Gson;
 
 public class GsonUtil {
-    private static Gson mGson = new Gson();
-    
+    public static Gson mGson = new Gson();
 
-    public GsonUtil() {
+    /*public GsonUtil() {
         GsonUtil.mGson = new Gson();
-    }
+    }*/
 
     public static <T> T fromJson(String s, Class<T> c) {
         return mGson.fromJson(s, c);
