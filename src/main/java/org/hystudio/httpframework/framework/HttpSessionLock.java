@@ -1,6 +1,7 @@
 package org.hystudio.httpframework.framework;
 
 
+import org.hystudio.httpframework.framework.exception.HttpSessionExecuteException;
 import org.hystudio.httpframework.framework.exception.HttpSessionLockException;
 
 public class HttpSessionLock {
@@ -33,6 +34,9 @@ public class HttpSessionLock {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            if (status == 3) {
+                throw new HttpSessionExecuteException("执行出错");
             }
             owner = Thread.currentThread();
         }
