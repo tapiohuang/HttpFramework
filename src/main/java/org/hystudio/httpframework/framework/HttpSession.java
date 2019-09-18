@@ -56,10 +56,11 @@ public class HttpSession {
             try {
                 RequestHandle requestHandle = new RequestHandle();
                 httpSession.result = requestHandle.handle(httpSession.method, httpSession.args);
+                httpSession.httpSessionLock.setStatus(2);
             } catch (HttpSessionExecuteException e) {
                 httpSessionListener.sendEvent(e);
+                httpSession.httpSessionLock.setStatus(3);
             } finally {
-                httpSession.httpSessionLock.setStatus(2);
                 httpSession.httpSessionLock.unlock();
             }
 
