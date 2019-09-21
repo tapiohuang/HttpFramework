@@ -1,4 +1,10 @@
 package org.hystudio.httpframework.framework.processor.response;
 
-public class IResponseProcessor {
+import org.hystudio.httpframework.framework.data.response.ResponseData;
+
+public interface IResponseProcessor {
+    public void process();
+
+    public Object getResult();
+
 }
