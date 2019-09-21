@@ -1,4 +1,14 @@
 package org.hystudio.httpframework.framework.processor.request;
 
-public class DefaultRequestHeaderProcessor {
+import org.hystudio.httpframework.framework.processor.response.AbstractResponseProcessor;
+
+public class DefaultRequestHeaderProcessor extends AbstractResponseProcessor {
+    @Override
+    public void setProcessResult() {
+    }
+
+    @Override
+    public void process() {
+
+    }
 }
