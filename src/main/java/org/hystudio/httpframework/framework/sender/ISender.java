@@ -1,4 +1,8 @@
 package org.hystudio.httpframework.framework.sender;
 
-public class ISender {
+/**
+ * Sender interface
+ */
+public interface ISender {
+    public void send();
 }
