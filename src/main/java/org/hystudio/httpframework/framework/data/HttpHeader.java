@@ -24,7 +24,6 @@ public class HttpHeader {
         map.forEach((k, v) -> {
             headerMap.put(StringUtil.toString(k), StringUtil.toString(v));
         });
-
     }
 
     public void add(String key, String value) {
