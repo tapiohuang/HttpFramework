@@ -1,4 +1,4 @@
 package org.hystudio.httpframework.framework2;
 
-public class HttpSessionExecutor {
+public interface ISenderFactory {
 }
