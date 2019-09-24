@@ -1,11 +1,9 @@
-package org.hystudio.httpframework.framework.processor.request;
+package org.hystudio.httpframework.framework2.processor.request;
 
-import org.hystudio.httpframework.framework.data.RequestData;
 import org.hystudio.httpframework.framework.exception.RequestProcessorInitializeException;
-import org.hystudio.httpframework.framework.processor.AbstractProcessorHandle;
-import org.hystudio.httpframework.framework.processor.IProcessor;
-
-import java.util.LinkedList;
+import org.hystudio.httpframework.framework2.data.RequestData;
+import org.hystudio.httpframework.framework2.processor.AbstractProcessorHandle;
+import org.hystudio.httpframework.framework2.processor.IProcessor;
 
 public class RequestProcessorsHandle extends AbstractProcessorHandle implements IRequestProcessorHandle {
     protected RequestData requestData;
@@ -13,10 +11,6 @@ public class RequestProcessorsHandle extends AbstractProcessorHandle implements 
     @Override
     public void addProcessor(IProcessor processor) {
         AbstractRequestProcessor requestProcessor = (AbstractRequestProcessor) processor;
-        if (requestData == null) {
-            throw new RequestProcessorInitializeException("ResponseData必须先被初始化注入！");
-        }
-        requestProcessor.setRequestData(requestData);
         processors.add(requestProcessor);
     }
 
@@ -27,6 +21,17 @@ public class RequestProcessorsHandle extends AbstractProcessorHandle implements 
 
     @Override
     public void setRequestData(RequestData requestData) {
+        this.processors.forEach(processor -> {
+            ((AbstractRequestProcessor) processor).setRequestData(requestData);
+        });
         this.requestData = requestData;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestProcessorsHandle{" +
+                "requestData=" + requestData +
+                ", processors=" + processors +
+                '}';
     }
 }
