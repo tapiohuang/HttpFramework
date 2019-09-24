@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework2;
+package org.hystudio.httpframework.framework2.data;
 
 public class RequestData {
     private Header header;

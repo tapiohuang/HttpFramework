@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework.reader;
+package org.hystudio.httpframework.framework2.reader;
 
 public class DefaultReader extends AbstractReader {
     @Override

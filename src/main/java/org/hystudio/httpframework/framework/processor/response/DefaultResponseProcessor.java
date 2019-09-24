@@ -1,5 +1,7 @@
 package org.hystudio.httpframework.framework.processor.response;
 
+import org.hystudio.httpframework.framework.processor.IProcessor;
+
 public class DefaultResponseProcessor extends AbstractResponseProcessor {
     @Override
     public void process() {
@@ -7,12 +9,7 @@ public class DefaultResponseProcessor extends AbstractResponseProcessor {
     }
 
     @Override
-    public Object getResult() {
-        return this.result;
-    }
-
-    @Override
-    public void setProcessResult() {
-        this.result = null;
+    public void setNextProcessor(Class<? extends IProcessor> processor) {
+        
     }
 }

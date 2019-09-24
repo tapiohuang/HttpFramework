@@ -1,10 +1,9 @@
-package org.hystudio.httpframework.framework.annotation;
+package org.hystudio.httpframework.framework2.annotation;
 
-import org.hystudio.httpframework.framework.config.RequestContentType;
-import org.hystudio.httpframework.framework.config.RequestMethod;
-import org.hystudio.httpframework.framework.config.ResponseDataType;
-import org.hystudio.httpframework.framework.interfaces.ContentParser;
-import org.hystudio.httpframework.framework.interfaces.DataParser;
+
+import org.hystudio.httpframework.framework2.config.ContentType;
+import org.hystudio.httpframework.framework2.config.RequestMethod;
+import org.hystudio.httpframework.framework2.config.DataType;
 
 import java.lang.annotation.*;
 
@@ -16,9 +15,9 @@ public @interface Request {
 
     RequestMethod method();
 
-    RequestContentType contentType();
+    ContentType contentType();
 
-    ResponseDataType dataType();
+    DataType dataType();
 
     int timeout() default 5000;
 }

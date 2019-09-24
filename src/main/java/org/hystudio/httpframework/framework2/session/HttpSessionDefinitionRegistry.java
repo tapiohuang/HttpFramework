@@ -1,8 +1,7 @@
-package org.hystudio.httpframework.framework2.registry;
+package org.hystudio.httpframework.framework2.session;
 
 
 import org.hystudio.httpframework.framework2.annotation.*;
-import org.hystudio.httpframework.framework2.session.HttpSessionDefinition;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

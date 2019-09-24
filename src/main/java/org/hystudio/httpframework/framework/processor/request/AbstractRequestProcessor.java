@@ -2,26 +2,26 @@ package org.hystudio.httpframework.framework.processor.request;
 
 import org.hystudio.httpframework.framework.data.RequestData;
 import org.hystudio.httpframework.framework.data.response.ResponseData;
+import org.hystudio.httpframework.framework.processor.AbstractProcessor;
+import org.hystudio.httpframework.framework.processor.IProcessor;
 
-public abstract class AbstractRequestProcessor implements IRequestProcessor {
-    @SuppressWarnings("WeakerAccess")
+
+public abstract class AbstractRequestProcessor extends AbstractProcessor implements IRequestProcessor {
     protected RequestData requestData;
-    protected Object result;
-
-
-    public void setResponseData(RequestData requestData) {
-        this.requestData = requestData;
-    }
-
-    public abstract void setProcessResult();
 
     @Override
-    public Object getResult() {
-        return result;
+    protected void setNextProcessor(Class<? extends IProcessor> processor) {
+        this.nextProcessor = processor;
     }
+
 
     @Override
     public RequestData getRequestData() {
         return this.requestData;
+    }
+
+    @Override
+    public void setRequestData(RequestData requestData) {
+        this.requestData = requestData;
     }
 }

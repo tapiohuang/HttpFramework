@@ -1,17 +1,24 @@
-package org.hystudio.httpframework.framework2.processor.request;
+package org.hystudio.httpframework.framework2.processor.request.handle;
 
-import org.hystudio.httpframework.framework.exception.RequestProcessorInitializeException;
 import org.hystudio.httpframework.framework2.data.RequestData;
 import org.hystudio.httpframework.framework2.processor.AbstractProcessorHandle;
 import org.hystudio.httpframework.framework2.processor.IProcessor;
+import org.hystudio.httpframework.framework2.processor.request.AbstractRequestProcessor;
 
 public class RequestProcessorsHandle extends AbstractProcessorHandle implements IRequestProcessorHandle {
     protected RequestData requestData;
+    protected Object[] objects;
 
     @Override
     public void addProcessor(IProcessor processor) {
         AbstractRequestProcessor requestProcessor = (AbstractRequestProcessor) processor;
-        processors.add(requestProcessor);
+        processors.addLast(requestProcessor);
+    }
+
+    @Override
+    public void addProcessorFirst(IProcessor processor) {
+        AbstractRequestProcessor requestProcessor = (AbstractRequestProcessor) processor;
+        processors.addFirst(requestProcessor);
     }
 
     @Override

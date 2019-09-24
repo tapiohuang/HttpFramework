@@ -1,7 +1,4 @@
-package org.hystudio.httpframework.framework.processor;
-
-import org.hystudio.httpframework.framework.data.response.ResponseData;
-import org.hystudio.httpframework.framework.processor.response.AbstractResponseProcessor;
+package org.hystudio.httpframework.framework2.processor;
 
 public abstract class AbstractProcessor implements IProcessor {
     protected Object currentResult;//当前Processor处理的结果

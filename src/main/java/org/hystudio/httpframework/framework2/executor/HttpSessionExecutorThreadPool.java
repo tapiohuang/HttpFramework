@@ -1,6 +1,5 @@
-package org.hystudio.httpframework.framework2.processor.executor;
+package org.hystudio.httpframework.framework2.executor;
 
-import org.hystudio.httpframework.framework.HttpSessionThreadPool;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -14,7 +13,7 @@ public class HttpSessionExecutorThreadPool {
     public HttpSessionExecutorThreadPool() {
         pool = new ThreadPoolExecutor(5, 10, 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<Runnable>(),
-                new HttpSessionThreadPool.HttpSessionThreadPoolFactory()
+                new HttpSessionExecutorThreadPool.HttpSessionExecutorThreadPoolFactory()
         );
     }
 
@@ -22,11 +21,11 @@ public class HttpSessionExecutorThreadPool {
         pool.execute(httpSessionExecutor);
     }
 
-    public static class HttpSessionExecutorThreadPoolFactory implements ThreadFactory {
+    private static class HttpSessionExecutorThreadPoolFactory implements ThreadFactory {
         private final ThreadGroup group;
         private final AtomicInteger threadNumber = new AtomicInteger(1);
 
-        public HttpSessionExecutorThreadPoolFactory() {
+        private HttpSessionExecutorThreadPoolFactory() {
             SecurityManager s = System.getSecurityManager();
             group = (s != null) ? s.getThreadGroup() :
                     Thread.currentThread().getThreadGroup();

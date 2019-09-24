@@ -1,39 +1,26 @@
 package org.hystudio.httpframework.framework2;
 
-import org.hystudio.httpframework.utils.ClassUtil;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.MethodInterceptor;
-import org.springframework.cglib.proxy.MethodProxy;
+import org.springframework.context.ApplicationContext;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+final class HttpRequestProxyFactory {
+    private ApplicationContext applicationContext;
 
-public class HttpRequestProxyFactory implements MethodInterceptor {
+    HttpRequestProxyFactory(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
-    public Object createProxy(BeanDefinition beanDefinition) {
+    Object createProxy(BeanDefinition beanDefinition) {
         try {
             Class clazz = Class.forName(beanDefinition.getBeanClassName());
             Enhancer enhancer = new Enhancer();
             enhancer.setSuperclass(clazz);
-            enhancer.setCallback(this);
+            enhancer.setCallback(new HttpRequestProxyMethodInterceptor(this.applicationContext));
             return enhancer.create();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
-
-    @Override
-    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        if (ClassUtil.isBaseMethod(method)) {
-            return methodProxy.invokeSuper(o, objects);
-        }
-
-        return null;
-    }
-
 }

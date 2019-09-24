@@ -1,42 +1,42 @@
-package org.hystudio.httpframework.framework
+package org.hystudio.httpframework.framework;
 
-import org.springframework.beans.factory.config.BeanDefinition
-import org.springframework.cglib.proxy.CallbackFilter
-import org.springframework.cglib.proxy.Enhancer
-import org.springframework.cglib.proxy.MethodInterceptor
-import org.springframework.cglib.proxy.MethodProxy
+import org.hystudio.httpframework.utils.ClassUtil;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.cglib.proxy.CallbackFilter;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 
-import java.lang.reflect.Method
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-class HttpRequestProxy : MethodInterceptor, CallbackFilter {
+public class HttpRequestProxy implements MethodInterceptor {
+    private static final Set<String> baseMethod = new HashSet<>(Arrays.asList("toString", "hashCode", "equals", "clone"));
+    public static HttpRequestProxy httpRequestProxy = new HttpRequestProxy();
 
-
-    @Throws(Throwable::class)
-    override fun intercept(o: Any, method: Method, objects: Array<Any>, methodProxy: MethodProxy): Any? {
-        return null
-    }
-
-    override fun accept(method: Method): Int {
-        return 0
-    }
-
-    companion object {
-        var httpRequestProxy = HttpRequestProxy()
-
-        fun createProxy(beanDefinition: BeanDefinition): Any? {
-            try {
-                val clazz = Class.forName(beanDefinition.beanClassName)
-                val enhancer = Enhancer()
-                enhancer.setSuperclass(clazz)
-                val httpRequestProxy = HttpRequestProxy()
-                enhancer.setCallback(httpRequestProxy)
-                enhancer.setCallbackFilter(httpRequestProxy)
-                return enhancer.create()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return null
+    public static Object createProxy(BeanDefinition beanDefinition) {
+        try {
+            Class clazz = Class.forName(beanDefinition.getBeanClassName());
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(clazz);
+            enhancer.setCallback(httpRequestProxy);
+            return enhancer.create();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
+
+
+    @Override
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        if (ClassUtil.isBaseMethod(method)) {
+            return methodProxy.invokeSuper(o, objects);
+        }
+
+        return null;
+    }
+
 }

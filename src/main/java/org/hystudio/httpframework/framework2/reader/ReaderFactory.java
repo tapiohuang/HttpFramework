@@ -1,8 +1,6 @@
-package org.hystudio.httpframework.framework2;
+package org.hystudio.httpframework.framework2.reader;
 
 
-import org.hystudio.httpframework.framework2.reader.DefaultReader;
-import org.hystudio.httpframework.framework2.reader.IReader;
 import org.hystudio.httpframework.framework2.session.HttpSession;
 
 public final class ReaderFactory implements IReaderFactory {

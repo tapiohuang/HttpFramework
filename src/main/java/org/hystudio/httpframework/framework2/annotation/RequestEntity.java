@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework.annotation;
+package org.hystudio.httpframework.framework2.annotation;
 
 
 import java.lang.annotation.*;

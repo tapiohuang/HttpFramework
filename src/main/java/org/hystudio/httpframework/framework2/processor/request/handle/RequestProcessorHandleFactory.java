@@ -1,44 +1,56 @@
-package org.hystudio.httpframework.framework2.processor.request;
+package org.hystudio.httpframework.framework2.processor.request.handle;
 
-import org.hystudio.httpframework.framework2.session.HttpSession;
+import org.hystudio.httpframework.framework2.processor.request.*;
 import org.hystudio.httpframework.framework2.session.HttpSessionDefinition;
+
+import java.util.Arrays;
 
 
 public final class RequestProcessorHandleFactory implements IRequestProcessorHandleFactory {
 
-    public void createProcessorHandle(Object[] objects, HttpSession httpSession, HttpSessionDefinition httpSessionDefinition) {
-        int[] requestProcessorOrder = httpSessionDefinition.getRequestProcessorOrder();
-        RequestProcessorsHandle requestProcessorsHandle = new RequestProcessorsHandle();
-        requestProcessorsHandle.setRequestData(httpSession.getRequestData());
-        for (int index : requestProcessorOrder
-        ) {
-            requestProcessorsHandle.addProcessor((AbstractRequestProcessor) objects[index]);
-        }
-        createDefaultProcessorHandle(requestProcessorsHandle);
-        httpSession.setRequestProcessorHandle(requestProcessorsHandle);
-    }
-
-    /**
-     * 添加默认的Processor
-     *
-     * @param requestProcessorsHandle RequestProcessorsHandle
-     */
-    private void createDefaultProcessorHandle(RequestProcessorsHandle requestProcessorsHandle) {
-        DefaultRequestBodyProcessor defaultRequestBodyProcessor = new DefaultRequestBodyProcessor();
-        DefaultRequestHeaderProcessor defaultRequestHeaderProcessor = new DefaultRequestHeaderProcessor();
-        requestProcessorsHandle.addProcessor(defaultRequestHeaderProcessor);
-        requestProcessorsHandle.addProcessor(defaultRequestBodyProcessor);
-    }
-
     @Override
     public RequestProcessorsHandle createRequestProcessorsHandle(Object[] objects, HttpSessionDefinition httpSessionDefinition) {
+        boolean hasRequestBodyProcessor = false;
+        boolean hasRequestHeaderProcessor = false;
         int[] requestProcessorOrder = httpSessionDefinition.getRequestProcessorOrder();
+        int[] requestEntityIndexes = httpSessionDefinition.getRequestEntityIndexes();
+        int[] requestHeaderIndexes = httpSessionDefinition.getRequestHeaderIndexes();
+        Object[] requestEntities = this.createParameterArr(requestEntityIndexes, objects);
+        Object[] requestHeaders = this.createParameterArr(requestHeaderIndexes, objects);
         RequestProcessorsHandle requestProcessorsHandle = new RequestProcessorsHandle();
         for (int index : requestProcessorOrder
         ) {
-            requestProcessorsHandle.addProcessor((AbstractRequestProcessor) objects[index]);
+            AbstractRequestProcessor processor = ((AbstractRequestProcessor) objects[index]);
+            processor.setRequestEntities(requestEntities);
+            processor.setRequestHeaders(requestHeaders);
+            if (processor instanceof AbstractRequestBodyProcessor) {
+                hasRequestBodyProcessor = true;
+            }
+            if (processor instanceof AbstractRequestHeaderProcessor) {
+                hasRequestHeaderProcessor = true;
+            }
+            requestProcessorsHandle.addProcessor(processor);
         }
-        createDefaultProcessorHandle(requestProcessorsHandle);
+        if (!hasRequestBodyProcessor) {
+            DefaultRequestBodyProcessor defaultRequestBodyProcessor = new DefaultRequestBodyProcessor();
+            defaultRequestBodyProcessor.setRequestEntities(requestEntities);
+            defaultRequestBodyProcessor.setRequestHeaders(requestHeaders);
+            requestProcessorsHandle.addProcessorFirst(defaultRequestBodyProcessor);
+        }
+        if (!hasRequestHeaderProcessor) {
+            DefaultRequestHeaderProcessor defaultRequestHeaderProcessor = new DefaultRequestHeaderProcessor();
+            defaultRequestHeaderProcessor.setRequestEntities(requestEntities);
+            defaultRequestHeaderProcessor.setRequestHeaders(requestHeaders);
+            requestProcessorsHandle.addProcessorFirst(defaultRequestHeaderProcessor);
+        }
         return requestProcessorsHandle;
+    }
+
+    private Object[] createParameterArr(int[] indexes, Object[] objects) {
+        Object[] parameterObjects = new Object[indexes.length];
+        for (int i = 0; i < indexes.length; i++) {
+            parameterObjects[i] = objects[indexes[i]];
+        }
+        return parameterObjects;
     }
 }

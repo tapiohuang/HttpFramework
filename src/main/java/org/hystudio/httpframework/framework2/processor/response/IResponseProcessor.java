@@ -1,10 +1,10 @@
-package org.hystudio.httpframework.framework.processor.response;
+package org.hystudio.httpframework.framework2.processor.response;
 
-import org.hystudio.httpframework.framework.data.RequestData;
-import org.hystudio.httpframework.framework.data.response.ResponseData;
-import org.hystudio.httpframework.framework.processor.IProcessor;
 
-public interface IResponseProcessor extends IProcessor {
+import org.hystudio.httpframework.framework2.data.ResponseData;
+import org.hystudio.httpframework.framework2.processor.IProcessor;
+
+interface IResponseProcessor extends IProcessor {
 
     public ResponseData getResponseData();
 

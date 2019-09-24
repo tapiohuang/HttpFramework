@@ -1,7 +1,7 @@
-package org.hystudio.httpframework.framework.sender;
+package org.hystudio.httpframework.framework2.sender;
 
 /**
- * Sender interface
+ * Sender interfaces
  */
 public interface ISender {
     public void send();

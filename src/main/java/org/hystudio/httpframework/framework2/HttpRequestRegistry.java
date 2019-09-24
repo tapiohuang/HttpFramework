@@ -1,8 +1,10 @@
-package org.hystudio.httpframework.framework;
+package org.hystudio.httpframework.framework2;
 
-import org.hystudio.httpframework.framework.annotation.HttpRequest;
-import org.hystudio.httpframework.framework.proxy.HttpRequestFactory;
-import org.hystudio.httpframework.framework.proxy.HttpSessionHandle;
+
+import org.hystudio.httpframework.framework2.annotation.Http;
+import org.hystudio.httpframework.framework2.executor.HttpSessionExecutorThreadPool;
+import org.hystudio.httpframework.framework2.session.HttpSessionDefinitionRegistry;
+import org.hystudio.httpframework.framework2.session.HttpSessionFactory;
 import org.hystudio.httpframework.utils.StackTraceUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
@@ -35,20 +37,28 @@ public class HttpRequestRegistry implements
     private ClassLoader classLoader;
     private Set<BeanDefinition> beanDefinitionSet;
     private BeanFactory beanFactory;
-    private HttpRequestFactory httpRequestFactory;
+    private HttpRequestProxyFactory httpRequestProxyFactory;
     private ApplicationContext applicationContext;
     private HttpSessionDefinitionRegistry httpSessionDefinitionRegistry;
 
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-        this.initHttpSessionHandle();
+        this.initHttpRequestProxyFactory();//初始化生成代理对象的工厂对象
+        this.initHttpSessionDefinitionRegistry();//初始化HttpSession的定义注册器
         this.initHttpSessionThreadPool();
-        this.initHttpSessionDefinitionRegistry();
         this.initHttpSessionFactory();
-        this.initHttpRequestFactory();
+
         this.getBasePackage();//获取main的包名路径
         this.createPackageScanner();//创建包扫描器
-        this.startScan();//开始扫描含有HttpQuest的注解
+        this.startScan();//开始扫描含有Http的注解
         this.resolveHttpRequest();//构建对象
+    }
+
+    /**
+     * 初始化HttpRequestProxy工厂
+     */
+    private void initHttpRequestProxyFactory() {
+        this.httpRequestProxyFactory = new HttpRequestProxyFactory(applicationContext);
+        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpRequestProxyFactory.class.getName(), this.httpRequestProxyFactory);
     }
 
     /**
@@ -60,17 +70,11 @@ public class HttpRequestRegistry implements
     }
 
     /**
-     * 初始化HttpRequest工厂
-     */
-    private void initHttpRequestFactory() {
-        this.httpRequestFactory = new HttpRequestFactory(this.applicationContext);
-    }
-
-    /**
      * 初始化HttpSession工厂
      */
     private void initHttpSessionFactory() {
-        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpSessionFactory.class.getName(), new HttpSessionFactory(this.httpSessionDefinitionRegistry));
+        HttpSessionFactory httpSessionFactory = new HttpSessionFactory();
+        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpSessionFactory.class.getName(), httpSessionFactory);
     }
 
     /**
@@ -78,24 +82,20 @@ public class HttpRequestRegistry implements
      * 初始化HttpSessionThreadPool
      */
     private void initHttpSessionThreadPool() {
-        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpSessionThreadPool.class.getName(), new HttpSessionThreadPool());
+        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpSessionExecutorThreadPool.class.getName(), new HttpSessionExecutorThreadPool());
     }
 
-    /**
-     * 1.
-     * 初始化HttpSessionHandle
-     */
-    private void initHttpSessionHandle() {
-        ((DefaultListableBeanFactory) beanFactory).registerSingleton(HttpSessionHandle.class.getName(), new HttpSessionHandle(this.applicationContext));
-    }
 
     private void startScan() {
-        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(HttpRequest.class);
+        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(Http.class);
         scanner.addIncludeFilter(annotationTypeFilter);
         scanner.setResourceLoader(this.resourceLoader);
         beanDefinitionSet = scanner.findCandidateComponents(mainClassPath);
     }
 
+    /**
+     * 将含有HttpRequest的接口实例化为Bean注入
+     */
     private void resolveHttpRequest() {
         for (BeanDefinition beanDefinition : beanDefinitionSet
         ) {
@@ -112,9 +112,18 @@ public class HttpRequestRegistry implements
      * @return Object //返回的代理Bean
      */
     private Object createBean(AnnotatedBeanDefinition annotatedBeanDefinition) {
-        return httpRequestFactory.createProxy(annotatedBeanDefinition);
+        Object o = httpRequestProxyFactory.createProxy(annotatedBeanDefinition);
+        try {
+            this.httpSessionDefinitionRegistry.registerHttpSessionDefinition(annotatedBeanDefinition.getBeanClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return o;
     }
 
+    /**
+     * 获取目录
+     */
     private void getBasePackage() {
         try {
             mainClassPath = StackTraceUtil.getBasePackageByMain(128);
@@ -123,6 +132,9 @@ public class HttpRequestRegistry implements
         }
     }
 
+    /**
+     * 初始化包扫描器
+     */
     private void createPackageScanner() {
         this.scanner = new ClassPathScanningCandidateComponentProvider(false, this.environment) {
             @Override

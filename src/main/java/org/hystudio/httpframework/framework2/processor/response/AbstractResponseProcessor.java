@@ -1,11 +1,15 @@
-package org.hystudio.httpframework.framework.processor.response;
+package org.hystudio.httpframework.framework2.processor.response;
 
-import org.hystudio.httpframework.framework.data.response.ResponseData;
-import org.hystudio.httpframework.framework.processor.AbstractProcessor;
-import org.hystudio.httpframework.framework.processor.IProcessor;
+
+import org.hystudio.httpframework.framework2.data.ResponseData;
+import org.hystudio.httpframework.framework2.processor.AbstractProcessor;
+import org.hystudio.httpframework.framework2.processor.IProcessor;
 
 public abstract class AbstractResponseProcessor extends AbstractProcessor implements IResponseProcessor {
     protected ResponseData responseData;
+
+    AbstractResponseProcessor() {
+    }
 
     @Override
     protected void setNextProcessor(Class<? extends IProcessor> processor) {
@@ -21,4 +25,5 @@ public abstract class AbstractResponseProcessor extends AbstractProcessor implem
     public void setResponseData(ResponseData responseData) {
         this.responseData = responseData;
     }
+
 }

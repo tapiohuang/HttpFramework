@@ -4,12 +4,6 @@ import org.hystudio.httpframework.framework.processor.response.AbstractResponseP
 
 public class DefaultRequestBodyProcessor extends AbstractResponseProcessor {
     @Override
-    public void setProcessResult() {
-
-    }
-
-    @Override
     public void process() {
-
     }
 }

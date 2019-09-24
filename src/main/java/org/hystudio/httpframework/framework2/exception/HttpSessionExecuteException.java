@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework.exception;
+package org.hystudio.httpframework.framework2.exception;
 
 public class HttpSessionExecuteException extends RuntimeException {
     public HttpSessionExecuteException() {

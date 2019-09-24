@@ -1,4 +1,4 @@
-package org.hystudio.httpframework.framework2;
+package org.hystudio.httpframework.framework2.session;
 
 import org.jetbrains.annotations.NotNull;
 
