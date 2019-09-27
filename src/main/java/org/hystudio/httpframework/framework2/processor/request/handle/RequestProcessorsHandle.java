@@ -29,7 +29,7 @@ public class RequestProcessorsHandle extends AbstractProcessorHandle implements 
     @Override
     public void setRequestData(RequestData requestData) {
         this.processors.forEach(processor -> {
-            ((AbstractRequestProcessor) processor).setRequestData(requestData);
+            //((AbstractRequestProcessor) processor).setRequestData(requestData);
         });
         this.requestData = requestData;
     }
