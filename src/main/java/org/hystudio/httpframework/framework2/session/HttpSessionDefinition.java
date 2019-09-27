@@ -13,6 +13,7 @@ public class HttpSessionDefinition {
     private int[] responseProcessorOrder;
     private int[] requestEntityIndexes;
     private int[] requestHeaderIndexes;
+    private int[] requestParameterIndexes;
     private int proxyIndex;
     private int timeout;
     private ContentType contentType;
@@ -108,6 +109,14 @@ public class HttpSessionDefinition {
         this.requestHeaderIndexes = requestHeaderIndexes;
     }
 
+    public int[] getRequestParameterIndexes() {
+        return requestParameterIndexes;
+    }
+
+    public void setRequestParameterIndexes(int[] requestParameterIndexes) {
+        this.requestParameterIndexes = requestParameterIndexes;
+    }
+
     @Override
     public String toString() {
         return "HttpSessionDefinition{" +
@@ -115,7 +124,8 @@ public class HttpSessionDefinition {
                 ", requestProcessorOrder=" + Arrays.toString(requestProcessorOrder) +
                 ", responseProcessorOrder=" + Arrays.toString(responseProcessorOrder) +
                 ", requestEntityIndexes=" + Arrays.toString(requestEntityIndexes) +
-                ", RequestHeaderIndexes=" + Arrays.toString(requestHeaderIndexes) +
+                ", requestHeaderIndexes=" + Arrays.toString(requestHeaderIndexes) +
+                ", requestParameterIndexes=" + Arrays.toString(requestParameterIndexes) +
                 ", proxyIndex=" + proxyIndex +
                 ", timeout=" + timeout +
                 ", contentType=" + contentType +

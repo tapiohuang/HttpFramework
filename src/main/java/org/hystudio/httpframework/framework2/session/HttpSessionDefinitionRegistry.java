@@ -33,10 +33,12 @@ public class HttpSessionDefinitionRegistry {
         int[] responseProcessorOrder = new int[methodParameterAnnotations.length];
         int[] requestEntityIndexes = new int[methodParameterAnnotations.length];
         int[] requestHeaderIndexes = new int[methodParameterAnnotations.length];
+        int[] requestParameterIndexes = new int[methodParameterAnnotations.length];
         int requestProcessorOrderIndex = 0;
         int responseProcessorOrderIndex = 0;
         int requestEntityIndex = 0;
         int requestHeaderIndex = 0;
+        int requestParameterIndex = 0;
         int proxyIndex = -1;
         for (int i = 0; i < methodParameterAnnotations.length; i++) {
             Annotation annotation = methodParameterAnnotations[i][0];
@@ -56,6 +58,10 @@ public class HttpSessionDefinitionRegistry {
                 requestHeaderIndexes[requestHeaderIndex] = i;
                 requestHeaderIndex++;
             }
+            if (annotation.annotationType().equals(ParameterEntity.class)) {
+                requestParameterIndexes[requestParameterIndex] = i;
+                requestParameterIndex++;
+            }
             if (annotation.annotationType().equals(Proxy.class)) {
                 proxyIndex = i;
             }
@@ -65,6 +71,7 @@ public class HttpSessionDefinitionRegistry {
         httpSessionDefinition.setRequestHeaderIndexes(Arrays.copyOfRange(requestHeaderIndexes, 0, requestHeaderIndex));
         httpSessionDefinition.setRequestProcessorOrder(Arrays.copyOfRange(requestProcessorOrder, 0, requestProcessorOrderIndex));
         httpSessionDefinition.setResponseProcessorOrder(Arrays.copyOfRange(responseProcessorOrder, 0, responseProcessorOrderIndex));
+        httpSessionDefinition.setRequestParameterIndexes(Arrays.copyOfRange(requestParameterIndexes, 0, requestParameterIndex));
 
         httpSessionDefinition.setContentType(request.contentType());
         httpSessionDefinition.setDataType(request.dataType());

@@ -120,15 +120,18 @@ public class LogUtils {
         }
     }
 
+
     private static void printLog(Level level, String tag, String message, boolean isOutToErr) {
         if (level.getLevelValue() >= logOutLevel.getLevelValue()) {
-            String log = DATE_FORMAT.format(new Date()) +
+            String color;
+            String log = level.getColor() + DATE_FORMAT.format(new Date()) +
                     " " +
                     level.getTag() +
                     "/" +
                     checkTextLengthLimit(tag, TAG_MAX_LENGTH) +
                     ": " +
-                    checkTextLengthLimit(message, MESSAGE_MAX_LENGTH);
+                    checkTextLengthLimit(message, MESSAGE_MAX_LENGTH
+                    ) + "\033[0m";
 
             if (isOutToConsole) {
                 outLogToConsole(isOutToErr, log);
@@ -177,15 +180,21 @@ public class LogUtils {
     }
 
     public static enum Level {
-        DEBUG("D", 1), INFO("I", 2), WARN("W", 3), ERROR("E", 4);
+        DEBUG("D", 1, "\033[40;31;4m"),
+        INFO("I", 2, "\033[34;4m"),
+        WARN("W", 3, "\033[33;4m"),
+        ERROR("E", 4, "\033[31;4m");
 
         private String tag;
 
         private int levelValue;
 
-        private Level(String tag, int levelValue) {
+        private String color;
+
+        private Level(String tag, int levelValue, String color) {
             this.tag = tag;
             this.levelValue = levelValue;
+            this.color = color;
         }
 
         public String getTag() {
@@ -194,6 +203,11 @@ public class LogUtils {
 
         public int getLevelValue() {
             return levelValue;
+        }
+
+
+        public String getColor() {
+            return color;
         }
     }
 

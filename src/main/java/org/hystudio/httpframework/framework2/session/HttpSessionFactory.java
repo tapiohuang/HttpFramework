@@ -1,6 +1,7 @@
 package org.hystudio.httpframework.framework2.session;
 
 import com.sun.org.apache.regexp.internal.RE;
+import org.hystudio.httpframework.framework2.processors2.*;
 import org.hystudio.httpframework.framework2.reader.IReaderFactory;
 import org.hystudio.httpframework.framework2.sender.ISenderFactory;
 import org.hystudio.httpframework.framework2.reader.ReaderFactory;
@@ -8,12 +9,6 @@ import org.hystudio.httpframework.framework2.sender.SenderFactory;
 import org.hystudio.httpframework.framework2.data.RequestData;
 import org.hystudio.httpframework.framework2.data.ResponseData;
 import org.hystudio.httpframework.framework2.exception.HttpSessionInitException;
-import org.hystudio.httpframework.framework2.processor.request.handle.IRequestProcessorHandleFactory;
-import org.hystudio.httpframework.framework2.processor.request.handle.RequestProcessorHandleFactory;
-import org.hystudio.httpframework.framework2.processor.request.handle.RequestProcessorsHandle;
-import org.hystudio.httpframework.framework2.processor.response.handle.IResponseProcessorHandleFactory;
-import org.hystudio.httpframework.framework2.processor.response.handle.ResponseProcessorHandleFactory;
-import org.hystudio.httpframework.framework2.processor.response.handle.ResponseProcessorsHandle;
 import org.hystudio.httpframework.framework2.reader.IReader;
 import org.hystudio.httpframework.framework2.sender.ISender;
 
@@ -53,17 +48,11 @@ public final class HttpSessionFactory implements ISenderFactory, IReaderFactory,
         httpSession.setReader(creatReader(httpSession));
         httpSession.setRequestData(new RequestData());
         httpSession.setResponseData(new ResponseData());
-
-        RequestProcessorsHandle requestProcessorsHandle = createRequestProcessorsHandle(objects, httpSessionDefinition);
-        ResponseProcessorsHandle responseProcessorsHandle = createResponseProcessorsHandle(objects, httpSessionDefinition);
-        requestProcessorsHandle.setRequestData(httpSession.getRequestData());
-
-        responseProcessorsHandle.setResponseData(httpSession.getResponseData());
+        RequestProcessorsHandle requestProcessorsHandle = createRequestProcessorsHandle(httpSession, objects, httpSessionDefinition);
+        ResponseProcessorsHandle responseProcessorsHandle = createResponseProcessorsHandle(httpSession, objects, httpSessionDefinition);
         httpSession.setRequestProcessorHandle(requestProcessorsHandle);
         httpSession.setResponseProcessorHandle(responseProcessorsHandle);
-
         httpSession.setUrl(httpSessionDefinition.getUrl());
-
         return httpSession;
     }
 
@@ -87,14 +76,14 @@ public final class HttpSessionFactory implements ISenderFactory, IReaderFactory,
     }
 
     @Override
-    public RequestProcessorsHandle createRequestProcessorsHandle(Object[] objects, HttpSessionDefinition httpSessionDefinition) {
-        RequestProcessorsHandle requestProcessorsHandle = this.requestProcessorHandleFactory.createRequestProcessorsHandle(objects, httpSessionDefinition);
+    public RequestProcessorsHandle createRequestProcessorsHandle(HttpSession httpSession, Object[] objects, HttpSessionDefinition httpSessionDefinition) {
+        RequestProcessorsHandle requestProcessorsHandle = this.requestProcessorHandleFactory.createRequestProcessorsHandle(httpSession, objects, httpSessionDefinition);
         return requestProcessorsHandle;
     }
 
     @Override
-    public ResponseProcessorsHandle createResponseProcessorsHandle(Object[] objects, HttpSessionDefinition httpSessionDefinition) {
-        ResponseProcessorsHandle responseProcessorsHandle = this.responseProcessorHandleFactory.createResponseProcessorsHandle(objects, httpSessionDefinition);
+    public ResponseProcessorsHandle createResponseProcessorsHandle(HttpSession httpSession, Object[] objects, HttpSessionDefinition httpSessionDefinition) {
+        ResponseProcessorsHandle responseProcessorsHandle = this.responseProcessorHandleFactory.createResponseProcessorsHandle(httpSession, objects, httpSessionDefinition);
         return responseProcessorsHandle;
     }
 }
