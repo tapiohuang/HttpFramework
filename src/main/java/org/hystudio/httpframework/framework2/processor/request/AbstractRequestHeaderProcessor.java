@@ -6,9 +6,9 @@ import org.hystudio.httpframework.framework2.data.RequestData;
 public abstract class AbstractRequestHeaderProcessor extends AbstractRequestProcessor {
     public abstract void setHeader(Header header);
 
-    @Override
+    //@Override
     public void setRequestData(RequestData requestData) {
-        super.setRequestData(requestData);
+        //super.setRequestData(requestData);
         this.setHeader(requestData.getHeader());
     }
 

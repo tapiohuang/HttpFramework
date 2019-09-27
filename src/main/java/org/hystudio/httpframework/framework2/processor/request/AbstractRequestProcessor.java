@@ -18,15 +18,4 @@ public abstract class AbstractRequestProcessor extends AbstractProcessor impleme
         this.nextProcessor = processor;
     }
 
-
-    @Override
-    public RequestData getRequestData() {
-        return this.requestData;
-    }
-
-    @Override
-    public void setRequestData(RequestData requestData) {
-        this.requestData = requestData;
-    }
-
 }

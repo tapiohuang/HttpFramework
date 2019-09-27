@@ -6,9 +6,9 @@ import org.hystudio.httpframework.framework2.data.RequestData;
 public abstract class AbstractRequestBodyProcessor extends AbstractRequestProcessor {
     public abstract void setDataBody(DataBody dataBody);
 
-    @Override
+    //@Override
     public void setRequestData(RequestData requestData) {
-        super.setRequestData(requestData);
+        //super.setRequestData(requestData);
         this.setDataBody(requestData.getDataBody());
     }
 
