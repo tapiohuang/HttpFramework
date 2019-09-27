@@ -1,7 +1,7 @@
 package org.hystudio.httpframework.framework2.processors2;
 
 
-abstract class AbstractProcessData {
+public final class ProcessData {
     private Object currentResult;//当前Processor处理的结果
     private Object prevResult;//上一个Processor处理的结果
     private boolean isFirst;//是否为第一个Processor
