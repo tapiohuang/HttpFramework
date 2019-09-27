@@ -1,4 +1,5 @@
-package org.hystudio.httpframework.framework2.processor.request.handle;
+package org.hystudio.httpframework.framework2.processor.request;
 
-public class IRequestHeaderProcess {
+public interface IRequestHeaderProcess extends IRequestProcessor {
+    public void setRequestHeaders(Object[] requestHeaders);
 }

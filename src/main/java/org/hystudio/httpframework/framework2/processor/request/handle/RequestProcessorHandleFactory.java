@@ -20,14 +20,14 @@ public final class RequestProcessorHandleFactory implements IRequestProcessorHan
         RequestProcessorsHandle requestProcessorsHandle = new RequestProcessorsHandle();
         for (int index : requestProcessorOrder
         ) {
-            AbstractRequestProcessor processor = ((AbstractRequestProcessor) objects[index]);
-            processor.setRequestEntities(requestEntities);
-            processor.setRequestHeaders(requestHeaders);
-            if (processor instanceof AbstractRequestBodyProcessor) {
+            IRequestProcessor processor = ((IRequestProcessor) objects[index]);
+            if (processor instanceof IRequestBodyProcessor) {
                 hasRequestBodyProcessor = true;
+                ((IRequestBodyProcessor) processor).setRequestEntities(requestEntities);
             }
-            if (processor instanceof AbstractRequestHeaderProcessor) {
+            if (processor instanceof IRequestHeaderProcess) {
                 hasRequestHeaderProcessor = true;
+                ((IRequestHeaderProcess) processor).setRequestHeaders(requestHeaders);
             }
             requestProcessorsHandle.addProcessor(processor);
         }
@@ -38,10 +38,10 @@ public final class RequestProcessorHandleFactory implements IRequestProcessorHan
             requestProcessorsHandle.addProcessorFirst(defaultRequestBodyProcessor);
         }
         if (!hasRequestHeaderProcessor) {
-            DefaultRequestHeaderProcessor defaultRequestHeaderProcessor = new DefaultRequestHeaderProcessor();
-            defaultRequestHeaderProcessor.setRequestEntities(requestEntities);
-            defaultRequestHeaderProcessor.setRequestHeaders(requestHeaders);
-            requestProcessorsHandle.addProcessorFirst(defaultRequestHeaderProcessor);
+            DefaultRequestHeaderProcessor2 defaultRequestHeaderProcessor2 = new DefaultRequestHeaderProcessor2();
+            defaultRequestHeaderProcessor2.setRequestHeaders(requestHeaders);
+            //defaultRequestHeaderProcessor.setRequestHeaders(requestHeaders);
+            requestProcessorsHandle.addProcessorFirst(defaultRequestHeaderProcessor2);
         }
         return requestProcessorsHandle;
     }
