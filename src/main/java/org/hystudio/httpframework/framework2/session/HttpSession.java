@@ -3,9 +3,8 @@ package org.hystudio.httpframework.framework2.session;
 import org.hystudio.httpframework.framework2.config.RequestMethod;
 import org.hystudio.httpframework.framework2.data.RequestData;
 import org.hystudio.httpframework.framework2.data.ResponseData;
-import org.hystudio.httpframework.framework2.processor.IProcessorHandle;
-import org.hystudio.httpframework.framework2.processor.request.handle.RequestProcessorsHandle;
-import org.hystudio.httpframework.framework2.processor.response.handle.ResponseProcessorsHandle;
+import org.hystudio.httpframework.framework2.processors2.RequestProcessorsHandle;
+import org.hystudio.httpframework.framework2.processors2.ResponseProcessorsHandle;
 import org.hystudio.httpframework.framework2.sender.ISender;
 import org.hystudio.httpframework.framework2.reader.IReader;
 

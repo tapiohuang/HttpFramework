@@ -12,4 +12,8 @@ public class GetSender extends AbstractSender {
     public void send() {
         super.send();
     }
+
+    private void prepareConnection() {
+        
+    }
 }

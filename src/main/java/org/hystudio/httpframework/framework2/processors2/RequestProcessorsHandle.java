@@ -1,44 +1,92 @@
-package org.hystudio.httpframework.framework2.processor.request.handle;
+package org.hystudio.httpframework.framework2.processors2;
+
 
 import org.hystudio.httpframework.framework2.data.RequestData;
-import org.hystudio.httpframework.framework2.processor.AbstractProcessorHandle;
-import org.hystudio.httpframework.framework2.processor.IProcessor;
-import org.hystudio.httpframework.framework2.processor.request.AbstractRequestProcessor;
+import org.hystudio.httpframework.framework2.processor.AbstractProcessor;
 
-public class RequestProcessorsHandle extends AbstractProcessorHandle implements IRequestProcessorHandle {
-    protected RequestData requestData;
-    protected Object[] objects;
+import java.util.LinkedList;
 
-    @Override
-    public void addProcessor(IProcessor processor) {
-        AbstractRequestProcessor requestProcessor = (AbstractRequestProcessor) processor;
+public final class RequestProcessorsHandle implements IProcessorHandle {
+    private LinkedList<IRequestProcessor> processors;
+    private Object[] requestEntities;
+    private Object[] requestHeaders;
+    private Object[] parameterEntities;
+    private RequestData requestData;
+    private boolean hasRequestBodyProcessor = false;
+    private boolean hasRequestHeaderProcessor = false;
+    private Object finalResult;
+
+    public RequestProcessorsHandle() {
+        this.processors = new LinkedList<>();
+    }
+
+    public void addProcessor(IRequestProcessor requestProcessor) {
+        this.injectObject(requestProcessor);
         processors.addLast(requestProcessor);
     }
 
-    @Override
-    public void addProcessorFirst(IProcessor processor) {
-        AbstractRequestProcessor requestProcessor = (AbstractRequestProcessor) processor;
+    public void addProcessorFirst(IRequestProcessor requestProcessor) {
+        this.injectObject(requestProcessor);
         processors.addFirst(requestProcessor);
     }
 
-    @Override
     public RequestData getRequestData() {
         return this.requestData;
     }
 
-    @Override
+
     public void setRequestData(RequestData requestData) {
-        this.processors.forEach(processor -> {
-            ((AbstractRequestProcessor) processor).setRequestData(requestData);
-        });
         this.requestData = requestData;
     }
 
+    private void injectObject(IRequestProcessor requestProcessor) {
+        if (requestProcessor instanceof IRequestBodyProcessor) {
+            this.hasRequestBodyProcessor = true;
+            ((IRequestBodyProcessor) requestProcessor).setRequestEntities(requestEntities);
+            ((IRequestBodyProcessor) requestProcessor).setDataBody(requestData.getDataBody());
+        }
+        if (requestProcessor instanceof IRequestHeaderProcessor) {
+            this.hasRequestHeaderProcessor = true;
+            ((IRequestHeaderProcessor) requestProcessor).setRequestHeaders(requestHeaders);
+            ((IRequestHeaderProcessor) requestProcessor).setHeader(requestData.getHeader());
+        }
+        if (requestProcessor instanceof IRequestParameterProcessor) {
+            this.hasRequestHeaderProcessor = true;
+            ((IRequestParameterProcessor) requestProcessor).setParameterEntities(parameterEntities);
+            ((IRequestParameterProcessor) requestProcessor).setParameter(requestData.getParameter());
+        }
+    }
+
     @Override
-    public String toString() {
-        return "RequestProcessorsHandle{" +
-                "requestData=" + requestData +
-                ", processors=" + processors +
-                '}';
+    public void process() {
+        ProcessData processData = new ProcessData();
+        int index = 0;
+        do {
+            IRequestProcessor processor = processors.get(index);
+            processor.setProcessData(processData);
+            processor.process();
+            index++;
+        } while (index < processors.size());
+        this.finalResult = processData.getCurrentResult();
+    }
+
+    public void setRequestEntities(Object[] requestEntities) {
+        this.requestEntities = requestEntities;
+    }
+
+    public void setRequestHeaders(Object[] requestHeaders) {
+        this.requestHeaders = requestHeaders;
+    }
+
+    public boolean isHasRequestBodyProcessor() {
+        return hasRequestBodyProcessor;
+    }
+
+    public boolean isHasRequestHeaderProcessor() {
+        return hasRequestHeaderProcessor;
+    }
+
+    public void setParameterEntities(Object[] parameterEntities) {
+        this.parameterEntities = parameterEntities;
     }
 }

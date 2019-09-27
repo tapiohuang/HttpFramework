@@ -1,47 +1,39 @@
-package org.hystudio.httpframework.framework2.processor.request.handle;
+package org.hystudio.httpframework.framework2.processors2;
 
-import org.hystudio.httpframework.framework2.processor.request.*;
+import org.hystudio.httpframework.framework2.session.HttpSession;
 import org.hystudio.httpframework.framework2.session.HttpSessionDefinition;
-
-import java.util.Arrays;
 
 
 public final class RequestProcessorHandleFactory implements IRequestProcessorHandleFactory {
 
     @Override
-    public RequestProcessorsHandle createRequestProcessorsHandle(Object[] objects, HttpSessionDefinition httpSessionDefinition) {
-        boolean hasRequestBodyProcessor = false;
-        boolean hasRequestHeaderProcessor = false;
+    public RequestProcessorsHandle createRequestProcessorsHandle(HttpSession httpSession, Object[] objects, HttpSessionDefinition httpSessionDefinition) {
+
         int[] requestProcessorOrder = httpSessionDefinition.getRequestProcessorOrder();
         int[] requestEntityIndexes = httpSessionDefinition.getRequestEntityIndexes();
         int[] requestHeaderIndexes = httpSessionDefinition.getRequestHeaderIndexes();
+        int[] requestParameterIndexes = httpSessionDefinition.getRequestParameterIndexes();
         Object[] requestEntities = this.createParameterArr(requestEntityIndexes, objects);
         Object[] requestHeaders = this.createParameterArr(requestHeaderIndexes, objects);
+        Object[] parameterEntities = this.createParameterArr(requestParameterIndexes, objects);
+
         RequestProcessorsHandle requestProcessorsHandle = new RequestProcessorsHandle();
+        requestProcessorsHandle.setRequestData(httpSession.getRequestData());
+        requestProcessorsHandle.setRequestEntities(requestEntities);
+        requestProcessorsHandle.setRequestHeaders(requestHeaders);
+        requestProcessorsHandle.setParameterEntities(parameterEntities);
+
         for (int index : requestProcessorOrder
         ) {
-            IRequestProcessor processor = ((IRequestProcessor) objects[index]);
-            if (processor instanceof IRequestBodyProcessor) {
-                hasRequestBodyProcessor = true;
-                ((IRequestBodyProcessor) processor).setRequestEntities(requestEntities);
-            }
-            if (processor instanceof IRequestHeaderProcess) {
-                hasRequestHeaderProcessor = true;
-                ((IRequestHeaderProcess) processor).setRequestHeaders(requestHeaders);
-            }
-            requestProcessorsHandle.addProcessor(processor);
+            requestProcessorsHandle.addProcessor(((IRequestProcessor) objects[index]));
         }
-        if (!hasRequestBodyProcessor) {
-            DefaultRequestBodyProcessor defaultRequestBodyProcessor = new DefaultRequestBodyProcessor();
-            defaultRequestBodyProcessor.setRequestEntities(requestEntities);
-            defaultRequestBodyProcessor.setRequestHeaders(requestHeaders);
-            requestProcessorsHandle.addProcessorFirst(defaultRequestBodyProcessor);
+        if (!requestProcessorsHandle.isHasRequestBodyProcessor()) {
+            DefaultRequestProcessor defaultRequestProcessor = new DefaultRequestProcessor();
+            requestProcessorsHandle.addProcessor(defaultRequestProcessor);
         }
-        if (!hasRequestHeaderProcessor) {
-            DefaultRequestHeaderProcessor2 defaultRequestHeaderProcessor2 = new DefaultRequestHeaderProcessor2();
-            defaultRequestHeaderProcessor2.setRequestHeaders(requestHeaders);
-            //defaultRequestHeaderProcessor.setRequestHeaders(requestHeaders);
-            requestProcessorsHandle.addProcessorFirst(defaultRequestHeaderProcessor2);
+        if (!requestProcessorsHandle.isHasRequestHeaderProcessor()) {
+            DefaultRequestProcessor defaultRequestProcessor = new DefaultRequestProcessor();
+            requestProcessorsHandle.addProcessor(defaultRequestProcessor);
         }
         return requestProcessorsHandle;
     }

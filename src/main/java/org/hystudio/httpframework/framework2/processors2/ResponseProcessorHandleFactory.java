@@ -1,19 +1,28 @@
-package org.hystudio.httpframework.framework2.processor.response.handle;
+package org.hystudio.httpframework.framework2.processors2;
 
-import org.hystudio.httpframework.framework2.processor.response.AbstractResponseProcessor;
+
+import org.hystudio.httpframework.framework2.session.HttpSession;
 import org.hystudio.httpframework.framework2.session.HttpSessionDefinition;
 
 public final class ResponseProcessorHandleFactory implements IResponseProcessorHandleFactory {
 
     @Override
-    public ResponseProcessorsHandle createResponseProcessorsHandle(Object[] objects, HttpSessionDefinition httpSessionDefinition) {
+    public ResponseProcessorsHandle createResponseProcessorsHandle(HttpSession httpSession, Object[] objects, HttpSessionDefinition httpSessionDefinition) {
         int[] responseProcessorOrder = httpSessionDefinition.getResponseProcessorOrder();
         ResponseProcessorsHandle responseProcessorsHandle = new ResponseProcessorsHandle();
+        responseProcessorsHandle.setResponseData(httpSession.getResponseData());
         for (int index : responseProcessorOrder
         ) {
-            AbstractResponseProcessor processor = ((AbstractResponseProcessor) objects[index]);
-            responseProcessorsHandle.addProcessor(processor);
+            responseProcessorsHandle.addProcessor(((IResponseProcessor) objects[index]));
         }
-        return new ResponseProcessorsHandle();
+        if (!responseProcessorsHandle.isHasResponseBodyProcessor()) {
+            DefaultResponseProcessor defaultResponseProcessor = new DefaultResponseProcessor();
+            responseProcessorsHandle.addProcessor(defaultResponseProcessor);
+        }
+        if (!responseProcessorsHandle.isHasResponseHeaderProcessor()) {
+            DefaultResponseProcessor defaultResponseProcessor = new DefaultResponseProcessor();
+            responseProcessorsHandle.addProcessor(defaultResponseProcessor);
+        }
+        return responseProcessorsHandle;
     }
 }
