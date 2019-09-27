@@ -1,5 +1,7 @@
 package org.hystudio.httpframework.framework2.data;
 
+import org.hystudio.httpframework.utils.StringUtil;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -14,7 +16,11 @@ public class Header {
         if (cover) {
             headerMap.put(key, value);
         } else {
-            StringBuilder valueBuilder = new StringBuilder(headerMap.get(key));
+            String v = headerMap.get(key);
+            if (v == null) {
+                v = "";
+            }
+            StringBuilder valueBuilder = new StringBuilder(v);
             if (valueBuilder.length() != 0) {
                 valueBuilder.append(";");
             }
@@ -27,18 +33,26 @@ public class Header {
         this.add(key, value, false);
     }
 
-    public void addAll(Map<String, String> map, boolean cover) {
+    public void addAll(Map map, boolean cover) {
         if (cover) {
-            headerMap.putAll(map);
+            map.forEach((k, v) -> {
+                headerMap.put(StringUtil.toString(k), StringUtil.toString(v));
+            });
         } else {
-            while (map.entrySet().iterator().hasNext()) {
-                Map.Entry<String, String> entry = map.entrySet().iterator().next();
-                this.add(entry.getKey(), entry.getValue());
-            }
+            map.forEach((k, v) -> {
+                this.add(StringUtil.toString(k), StringUtil.toString(v));
+            });
         }
     }
 
-    public void addAll(Map<String, String> map) {
+    public void addAll(Map map) {
         this.addAll(map, false);
+    }
+
+    @Override
+    public String toString() {
+        return "Header{" +
+                "headerMap=" + headerMap +
+                '}';
     }
 }
