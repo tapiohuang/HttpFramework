@@ -1,6 +1,11 @@
 package org.hystudio.httpframework.framework2.data;
 
+import org.hystudio.httpframework.framework2.config.RequestMethod;
+
 public class RequestData {
+    private RequestMethod requestMethod;
+    private String URL;
+    private String Version;
     private Header header;
     private DataBody dataBody;
     private Parameter parameter;
@@ -42,5 +47,29 @@ public class RequestData {
                 ", dataBody=" + dataBody +
                 ", parameter=" + parameter +
                 '}';
+    }
+
+    public RequestMethod getRequestMethod() {
+        return requestMethod;
+    }
+
+    public void setRequestMethod(RequestMethod requestMethod) {
+        this.requestMethod = requestMethod;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public String getVersion() {
+        return Version;
+    }
+
+    public void setVersion(String version) {
+        Version = version;
     }
 }

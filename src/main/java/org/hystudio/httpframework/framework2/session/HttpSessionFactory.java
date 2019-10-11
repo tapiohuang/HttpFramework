@@ -46,8 +46,8 @@ public final class HttpSessionFactory implements ISenderFactory, IReaderFactory,
         httpSession.setRequestMethod(httpSessionDefinition.getRequestMethod());
         httpSession.setSender(createSender(httpSession));
         httpSession.setReader(creatReader(httpSession));
-        httpSession.setRequestData(new RequestData());
-        httpSession.setResponseData(new ResponseData());
+        httpSession.setRequestData(createRequestData(httpSessionDefinition));
+        httpSession.setResponseData(createResponseData());
         RequestProcessorsHandle requestProcessorsHandle = createRequestProcessorsHandle(httpSession, objects, httpSessionDefinition);
         ResponseProcessorsHandle responseProcessorsHandle = createResponseProcessorsHandle(httpSession, objects, httpSessionDefinition);
         httpSession.setRequestProcessorHandle(requestProcessorsHandle);
@@ -85,5 +85,19 @@ public final class HttpSessionFactory implements ISenderFactory, IReaderFactory,
     public ResponseProcessorsHandle createResponseProcessorsHandle(HttpSession httpSession, Object[] objects, HttpSessionDefinition httpSessionDefinition) {
         ResponseProcessorsHandle responseProcessorsHandle = this.responseProcessorHandleFactory.createResponseProcessorsHandle(httpSession, objects, httpSessionDefinition);
         return responseProcessorsHandle;
+    }
+
+    private RequestData createRequestData(HttpSessionDefinition httpSessionDefinition) {
+        RequestData requestData = new RequestData();
+        requestData.setURL(httpSessionDefinition.getUrl());
+        requestData.setRequestMethod(httpSessionDefinition.getRequestMethod());
+        requestData.setVersion("HTTP/1.1");
+        return requestData;
+    }
+
+    private ResponseData createResponseData() {
+        ResponseData responseData = new ResponseData();
+        responseData.setVersion("HTTP/1.1");
+        return responseData;
     }
 }
