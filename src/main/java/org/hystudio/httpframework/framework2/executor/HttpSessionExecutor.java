@@ -11,11 +11,13 @@ import org.hystudio.httpframework.utils.LogUtils;
 
 public class HttpSessionExecutor implements Runnable {
     private HttpSession httpSession;
+    private ISender sender;
+    private IReader reader;
 
     public HttpSessionExecutor(HttpSession httpSession) {
         this.httpSession = httpSession;
-        this.processRequestData();
-        this.processResponseData();
+        this.sender = httpSession.getSender();
+        this.reader = httpSession.getReader();
     }
 
     private void processRequestData() {
@@ -39,9 +41,9 @@ public class HttpSessionExecutor implements Runnable {
 
     @Override
     public void run() {
-        ISender sender = httpSession.getSender();
-        IReader reader = httpSession.getReader();
+        this.processRequestData();
         sender.send();
         reader.read();
+        this.processResponseData();
     }
 }
