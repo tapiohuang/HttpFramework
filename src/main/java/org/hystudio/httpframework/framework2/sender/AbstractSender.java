@@ -2,7 +2,7 @@ package org.hystudio.httpframework.framework2.sender;
 
 import org.hystudio.httpframework.framework2.session.HttpSession;
 
-public class AbstractSender implements ISender {
+public abstract class AbstractSender implements ISender {
     protected HttpSession httpSession;
 
     public AbstractSender(HttpSession httpSession) {
@@ -13,7 +13,5 @@ public class AbstractSender implements ISender {
     }
 
     @Override
-    public void send() {
-
-    }
+    public abstract void send();
 }
