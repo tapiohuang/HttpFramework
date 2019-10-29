@@ -2,8 +2,8 @@ package org.hystudio.httpframework.framework2.processors2;
 
 
 import org.hystudio.httpframework.framework2.data.RequestData;
-import org.hystudio.httpframework.framework2.processor.AbstractProcessor;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public final class RequestProcessorsHandle implements IProcessorHandle {
@@ -88,5 +88,19 @@ public final class RequestProcessorsHandle implements IProcessorHandle {
 
     public void setParameterEntities(Object[] parameterEntities) {
         this.parameterEntities = parameterEntities;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestProcessorsHandle{" +
+                "processors=" + processors +
+                ", requestEntities=" + Arrays.toString(requestEntities) +
+                ", requestHeaders=" + Arrays.toString(requestHeaders) +
+                ", parameterEntities=" + Arrays.toString(parameterEntities) +
+                ", requestData=" + requestData +
+                ", hasRequestBodyProcessor=" + hasRequestBodyProcessor +
+                ", hasRequestHeaderProcessor=" + hasRequestHeaderProcessor +
+                ", finalResult=" + finalResult +
+                '}';
     }
 }

@@ -28,12 +28,12 @@ public final class RequestProcessorHandleFactory implements IRequestProcessorHan
             requestProcessorsHandle.addProcessor(((IRequestProcessor) objects[index]));
         }
         if (!requestProcessorsHandle.isHasRequestBodyProcessor()) {
-            DefaultRequestProcessor defaultRequestProcessor = new DefaultRequestProcessor();
-            requestProcessorsHandle.addProcessor(defaultRequestProcessor);
+            DefaultRequestBodyProcessor defaultRequestBodyProcessor = new DefaultRequestBodyProcessor();
+            requestProcessorsHandle.addProcessor(defaultRequestBodyProcessor);
         }
         if (!requestProcessorsHandle.isHasRequestHeaderProcessor()) {
-            DefaultRequestProcessor defaultRequestProcessor = new DefaultRequestProcessor();
-            requestProcessorsHandle.addProcessor(defaultRequestProcessor);
+            DefaultRequestHeaderProcessor defaultRequestHeaderProcessor = new DefaultRequestHeaderProcessor();
+            requestProcessorsHandle.addProcessor(defaultRequestHeaderProcessor);
         }
         return requestProcessorsHandle;
     }

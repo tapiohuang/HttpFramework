@@ -5,7 +5,10 @@ public class StringUtil {
         if (o == null) {
             throw new RuntimeException("toString()空指针异常");
         }
-        return String.valueOf(o);
+        if (ClassUtil.isBaseType(o)) {
+            return String.valueOf(o);
+        }
+        return o.toString();
     }
 
     public static String upperFirstWord(String s) {

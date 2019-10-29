@@ -1,10 +1,7 @@
 package org.hystudio.httpframework.utils;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 
 public class LogUtils {
@@ -87,6 +84,14 @@ public class LogUtils {
 
     public static void info(String tag, String message) {
         printLog(Level.INFO, tag, message, false);
+    }
+
+    public static void info(String tag, Object o) {
+        if (o == null) {
+            printLog(Level.INFO, tag, null, false);
+            return;
+        }
+        printLog(Level.INFO, tag, o.toString(), false);
     }
 
     public static void warn(String tag, String message) {

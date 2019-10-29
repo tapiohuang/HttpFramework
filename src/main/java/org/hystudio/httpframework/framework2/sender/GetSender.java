@@ -3,6 +3,8 @@ package org.hystudio.httpframework.framework2.sender;
 import org.hystudio.httpframework.framework2.session.HttpSession;
 import org.hystudio.httpframework.utils.LogUtils;
 
+import java.io.IOException;
+
 public class GetSender extends AbstractSender {
 
     public GetSender(HttpSession httpSession) {
@@ -15,6 +17,10 @@ public class GetSender extends AbstractSender {
     }
 
     private void prepareConnection() {
-
+        try {
+            super.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

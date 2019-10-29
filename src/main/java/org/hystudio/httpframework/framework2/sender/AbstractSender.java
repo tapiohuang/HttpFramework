@@ -2,6 +2,8 @@ package org.hystudio.httpframework.framework2.sender;
 
 import org.hystudio.httpframework.framework2.session.HttpSession;
 
+import java.io.IOException;
+
 public abstract class AbstractSender implements ISender {
     protected HttpSession httpSession;
 
@@ -10,6 +12,10 @@ public abstract class AbstractSender implements ISender {
     }
 
     public AbstractSender() {
+    }
+
+    protected void openConnection() throws IOException {
+        this.httpSession.getHttpSessionConnection().openConnection();
     }
 
     @Override

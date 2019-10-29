@@ -1,10 +1,7 @@
 package org.hystudio.httpframework.utils;
 
-import org.hystudio.httpframework.framework2.annotation.Except;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,25 +9,9 @@ import java.util.stream.Stream;
 
 public class ClassUtil {
 
-    private static final Set<String> baseMethod = new HashSet<>(Arrays.asList("toString", "hashCode", "equals", "clone"));
+    private static final Set<String> baseMethod = new HashSet<>(Arrays.asList(
+            "getClass", "toString", "hashCode", "equals", "clone", "wait", "notifyAll", "notify"));
 
-    public static void callMethod(Method method, Object target, Object... args) {
-        try {
-            method.invoke(target, args);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Object callMethod(Method method, Object target) {
-        Object o = null;
-        try {
-            o = method.invoke(target);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return o;
-    }
 
     public static LinkedList<Class> getSuperClassList(Class clazz) {
         LinkedList<Class> classes = new LinkedList<>();

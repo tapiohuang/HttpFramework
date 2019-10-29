@@ -3,6 +3,7 @@ package org.hystudio.httpframework.utils;
 import org.hystudio.httpframework.framework2.annotation.Except;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class ObjectUtil {
             String methodName = "get" + fieldName;
             Method method = methodHashMap.get(methodName);
             if (method != null) {
-                Object value = ClassUtil.callMethod(method, object);
+                Object value = ObjectUtil.callMethod(method, object);
                 boolean isBaseType = ClassUtil.isBaseType(value);
                 if (isBaseType) {
                     attributes.put(fieldName, value);
@@ -32,5 +33,23 @@ public class ObjectUtil {
             }
         });
         return attributes;
+    }
+
+    public static void callMethod(Method method, Object target, Object... args) {
+        try {
+            method.invoke(target, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object callMethod(Method method, Object target) {
+        Object o = null;
+        try {
+            o = method.invoke(target);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return o;
     }
 }

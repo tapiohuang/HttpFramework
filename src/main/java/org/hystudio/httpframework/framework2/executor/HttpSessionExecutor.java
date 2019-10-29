@@ -23,10 +23,12 @@ public class HttpSessionExecutor implements Runnable {
     private void processRequestData() {
         System.out.println("RequestData处理开始");
         RequestProcessorsHandle requestProcessorsHandle = httpSession.getRequestProcessorHandle();
+        LogUtils.info("Header", requestProcessorsHandle.toString());
         requestProcessorsHandle.process();
         RequestData requestData = requestProcessorsHandle.getRequestData();
         System.out.println("RequestData处理完成");
-        LogUtils.info("DataBody", requestData.getHeader().toString());
+        LogUtils.info("Header", requestData.getHeader().toString());
+        LogUtils.info("DataBody", requestData.getDataBody().toString());
     }
 
     private void processResponseData() {
@@ -36,7 +38,7 @@ public class HttpSessionExecutor implements Runnable {
         responseProcessorsHandle.process();
         Object o = responseProcessorsHandle.getFinalResult();
         System.out.println("ResponseData处理完成");
-        LogUtils.info("处理结果", o.toString());
+        //LogUtils.info("处理结果", o.toString());
     }
 
     @Override
