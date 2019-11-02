@@ -1,6 +1,5 @@
 package org.hystudio.httpframework;
 
-import org.hystudio.httpframework.exceptions.CreateRequestBeanProxyException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -47,7 +46,7 @@ public class HttpRequestProxyFactory implements BeanFactoryAware {
             enhancer.setCallback(new HttpRequestProxy());
             return enhancer.create();
         } catch (Exception e) {
-            throw new CreateRequestBeanProxyException(e);
+            throw new RuntimeException(e);
         }
     }
 

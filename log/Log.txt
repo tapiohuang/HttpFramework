@@ -1,0 +1,64 @@
+[34;4m10/30 00:04:43.154 I/t: [0mtrue
+[34;4m10/30 00:04:43.169 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@3d9c13b5
+[34;4m10/30 00:04:43.193 I/HttpSession: [0mHttpSession{requestData=RequestData{requestMethod=null, url='null', httpVersion=HTTP_1_1, requestHeader=AbstractHeader{headerMap={}}, requestBody=DataBody{bodyByteArray=[]}}
+, responseData=org.hystudio.httpframework.framework.datas.ResponseData@3daf7722
+, requestEntityObjectBean=RequestEntityObjectBean{methodHashMap={getInitLocation=[Ljava.lang.Object;@78641d23, getType=[Ljava.lang.Object;@74589991, getTime=[Ljava.lang.Object;@146dfe6, setType=[Ljava.lang.Object;@4716be8b, getUserid=[Ljava.lang.Object;@1fc32e4f, setInitLocation=[Ljava.lang.Object;@2f67b837, setUserid=[Ljava.lang.Object;@1869fbd2, setTime=[Ljava.lang.Object;@6af9fcb2}, objectArrayList=[TestRequestBean{initLocation='0,0', type='1', userid='165873'}, TestResponseBean2{time=1572365083170}]}
+, requestResolverMaster=org.hystudio.httpframework.framework.resolvers.request.RequestResolverMaster@6cce16f4
+, responseResolverMaster=org.hystudio.httpframework.framework.resolvers.response.ResponseResolverMaster@7efaad5a
+, methodParametersBean=MethodParametersBean{requestEntityObjectList=[TestRequestBean{initLocation='0,0', type='1', userid='165873'}, TestResponseBean2{time=1572365083170}], requestHeaderObjectList=[com.hystudio.incubator.testdemo.httprequest.TestHeader@291a7e3c, {Accept-Language=zh-CN,zh;q=0.8, BDA9F42E0C8A294ECDF5CC72AAE6A701=1,0,0,1,0,0, Cookie=112233, Host=www.sportcampus.cn, User-Agent=Mozilla/5.0 (Linux; U; Android; zh-cn; Build/LMY48Z) AppleWebKit/534.30 (KHTML, like Gecko) ', 'Version/4.0 Mobile Safari/534.30, platform=android, utoken=bfd3c459645dc034fbc659ae49db61df, uuid=4405CA09715A4224AFB83258B5C6F01D, versionCode=352, versionName=2.3.20, xxversionxx=20180601}], requestResolverWorkerList=[], responseResolverWorkerList=[], requestProxyList=[]}
+}
+[34;4m11/01 14:06:48.243 I/t: [0mtrue
+[34;4m11/01 14:06:48.248 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@5bbbdd4b
+[34;4m11/01 14:09:12.623 I/t: [0mtrue
+[34;4m11/01 14:09:12.627 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@1af05b03
+[34;4m11/01 14:19:00.760 I/t: [0mtrue
+[34;4m11/01 14:19:00.764 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@2bffa76d
+[34;4m11/01 14:21:30.492 I/t: [0mtrue
+[34;4m11/01 14:21:30.496 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@2fb68ec6
+[34;4m11/01 14:21:56.342 I/t: [0mtrue
+[34;4m11/01 14:21:56.346 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@79c4715d
+[34;4m11/01 14:23:39.139 I/t: [0mtrue
+[34;4m11/01 14:23:39.144 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@3ee39da0
+[34;4m11/01 14:24:22.062 I/t: [0mtrue
+[34;4m11/01 14:24:22.067 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@30272916
+[34;4m11/01 14:30:39.321 I/t: [0mtrue
+[34;4m11/01 14:30:39.328 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@1c93f6e1
+[34;4m11/01 14:30:56.463 I/t: [0mtrue
+[34;4m11/01 14:30:56.468 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@73cd37c0
+[34;4m11/01 14:30:56.478 I/Accept-Language: [0mzh-CN,zh;q=0.8
+[34;4m11/01 15:14:02.129 I/t: [0mtrue
+[34;4m11/01 15:14:02.134 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@51671b08
+[34;4m11/01 15:15:02.870 I/t: [0mtrue
+[34;4m11/01 15:15:02.875 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@51bde877
+[34;4m11/01 15:17:18.002 I/t: [0mtrue
+[34;4m11/01 15:17:18.007 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@35e52059
+[34;4m11/01 15:18:39.940 I/t: [0mtrue
+[34;4m11/01 15:18:39.944 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@5a772895
+[34;4m11/01 15:20:11.619 I/t: [0mtrue
+[34;4m11/01 15:20:11.623 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@7668d560
+[34;4m11/01 15:22:15.515 I/t: [0mtrue
+[34;4m11/01 15:22:15.520 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@6bd51ed8
+[34;4m11/01 21:49:07.298 I/t: [0mtrue
+[34;4m11/01 21:49:07.298 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@3b718392
+[34;4m11/02 20:39:56.603 I/t: [0mtrue
+[34;4m11/02 20:39:56.611 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@54e81b21
+[34;4m11/02 20:40:41.444 I/t: [0mtrue
+[34;4m11/02 20:40:41.450 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@4837595f
+[34;4m11/02 20:40:49.018 I/t: [0mtrue
+[34;4m11/02 20:40:49.027 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@17ae98d7
+[34;4m11/02 20:41:40.153 I/t: [0mtrue
+[34;4m11/02 20:41:40.160 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@36b6964d
+[34;4m11/02 20:55:19.516 I/t: [0mtrue
+[34;4m11/02 20:55:19.527 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@1af1347d
+[34;4m11/02 20:56:16.970 I/t: [0mtrue
+[34;4m11/02 20:56:16.978 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@515f4131
+[34;4m11/02 20:58:17.959 I/t: [0mtrue
+[34;4m11/02 20:58:17.965 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@7668d560
+[34;4m11/02 21:00:28.152 I/t: [0mtrue
+[34;4m11/02 21:00:28.157 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@315df4bb
+[34;4m11/02 21:02:06.218 I/t: [0mtrue
+[34;4m11/02 21:02:06.223 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@5bf61e67
+[34;4m11/02 21:07:44.778 I/t: [0mtrue
+[34;4m11/02 21:07:44.782 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@315df4bb
+[34;4m11/02 21:08:15.732 I/t: [0mtrue
+[34;4m11/02 21:08:15.738 I/TestRequest: [0mcom.hystudio.incubator.testdemo.httprequest.TestRequest$$EnhancerByCGLIB$$e85a1479@f325091

@@ -1,6 +1,6 @@
 package org.hystudio.httpframework.utils;
 
-import org.hystudio.httpframework.framework2.annotation.Except;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +11,7 @@ public class ObjectUtil {
     public static HashMap<String, Object> readObjectAttributes(Object object) {
         HashMap<String, Object> attributes = new HashMap<>();
         HashMap<String, Method> methodHashMap = ClassUtil.getMethodMap(object);
-        ArrayList<Field> attributeList = ClassUtil.getAttributeList(object, Except.class);
+        ArrayList<Field> attributeList = ClassUtil.getAttributeList(object);
         attributeList.forEach(field -> {
             String fieldName = StringUtil.upperFirstWord(field.getName());
             String methodName = "get" + fieldName;

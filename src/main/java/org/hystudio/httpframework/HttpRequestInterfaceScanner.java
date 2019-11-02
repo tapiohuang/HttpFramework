@@ -1,6 +1,6 @@
 package org.hystudio.httpframework;
 
-import org.hystudio.httpframework.annoations.Http;
+import org.hystudio.httpframework.annonations.HTTP;
 import org.hystudio.httpframework.utils.StackTraceUtil;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
@@ -65,7 +65,7 @@ public class HttpRequestInterfaceScanner implements EnvironmentAware, BeanClassL
 
     Set<BeanDefinition> scanHttpRequestInterface() {
         this.createPackageScanner();
-        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(Http.class);
+        AnnotationTypeFilter annotationTypeFilter = new AnnotationTypeFilter(HTTP.class);
         scanner.addIncludeFilter(annotationTypeFilter);
         scanner.setResourceLoader(this.resourceLoader);
         return scanner.findCandidateComponents(mainClassPath);

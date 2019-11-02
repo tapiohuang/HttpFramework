@@ -9,12 +9,12 @@ public class LogUtils {
     /**
      * 每条 Log 的 tag 输出的最大长度, 超过部分将被截断
      */
-    private static final int TAG_MAX_LENGTH = 20;
+    private static final int TAG_MAX_LENGTH = 1024;
 
     /**
      * 每条 Log 的 message 输出的最大长度, 超过部分将被截断
      */
-    private static final int MESSAGE_MAX_LENGTH = 1024;
+    private static final int MESSAGE_MAX_LENGTH = 2048;
 
     /**
      * 日期前缀格式化
@@ -34,7 +34,7 @@ public class LogUtils {
     /**
      * 是否输出到文件
      */
-    private static boolean isOutToFile = false;
+    private static boolean isOutToFile = true;
 
     /**
      * 日志输出文件, 追加到文件尾
@@ -134,9 +134,9 @@ public class LogUtils {
                     level.getTag() +
                     "/" +
                     checkTextLengthLimit(tag, TAG_MAX_LENGTH) +
-                    ": " +
+                    ": " + "\033[0m" +
                     checkTextLengthLimit(message, MESSAGE_MAX_LENGTH
-                    ) + "\033[0m";
+                    );
 
             if (isOutToConsole) {
                 outLogToConsole(isOutToErr, log);
@@ -171,6 +171,7 @@ public class LogUtils {
         if ((text != null) && (text.length() > maxLength)) {
             text = text.substring(0, maxLength - 3) + "...";
         }
+        //text = text.replace("\n", "\r\n");
         return text;
     }
 
